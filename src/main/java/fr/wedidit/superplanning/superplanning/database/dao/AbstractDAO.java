@@ -4,7 +4,7 @@ import fr.wedidit.superplanning.superplanning.database.DBUtils;
 import fr.wedidit.superplanning.superplanning.database.datasources.DBCPDataSource;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.database.exceptions.IdentifiableNotFoundException;
-import fr.wedidit.superplanning.superplanning.database.Identifiable;
+import fr.wedidit.superplanning.superplanning.identifiables.Identifiable;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;

@@ -1,7 +1,7 @@
 package fr.wedidit.superplanning.superplanning.database.dao;
 
-import fr.wedidit.superplanning.superplanning.database.Identifiable;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
+import fr.wedidit.superplanning.superplanning.identifiables.Identifiable;
 
 import java.sql.SQLException;
 
