@@ -1,8 +1,8 @@
 package fr.wedidit.superplanning.superplanning.database.dao;
 
 
-import fr.wedidit.superplanning.superplanning.database.Identifiable;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
+import fr.wedidit.superplanning.superplanning.identifiables.Identifiable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +25,10 @@ public interface DAO <E extends Identifiable> extends AutoCloseable {
     E persist(E e) throws DataAccessException;
 
     /**
-     * A default method to persist a list of entities.
+     * A default method to persist a list of identifiables.
      *
-     * @param list The list of entities to be persisted.
-     * @return The list of entities or clones if their id has been updated by the database.
+     * @param list The list of identifiables to be persisted.
+     * @return The list of identifiables or clones if their id has been updated by the database.
      * @throws DataAccessException If there is a data access error (see message).
      */
     default List<E> persist(List<E> list) throws DataAccessException {
@@ -48,17 +48,17 @@ public interface DAO <E extends Identifiable> extends AutoCloseable {
     Optional<E> find(long id) throws DataAccessException;
 
     /**
-     * Return a given page entities managed by the DAO from the database.
+     * Return a given page identifiables managed by the DAO from the database.
      *
-     * @return the list of entities managed by the DAO.
+     * @return the list of identifiables managed by the DAO.
      * @throws DataAccessException If there is a data access error (see message).
      */
     DAOPage<E> findAll(int pageNumber, int pageSize) throws DataAccessException;
 
     /**
-     * Return the first page of entities managed by the DAO from the database.
+     * Return the first page of identifiables managed by the DAO from the database.
      *
-     * @return the list of entities managed by the DAO.
+     * @return the list of identifiables managed by the DAO.
      * @throws DataAccessException If there is a data access error (see message).
      */
     default DAOPage<E> findAll() throws DataAccessException {
@@ -92,7 +92,7 @@ public interface DAO <E extends Identifiable> extends AutoCloseable {
     }
 
     /**
-     * Removes all the entities managed by the DAO from the database.
+     * Removes all the identifiables managed by the DAO from the database.
      *
      * @throws DataAccessException If there is a data access error (see message).
      */

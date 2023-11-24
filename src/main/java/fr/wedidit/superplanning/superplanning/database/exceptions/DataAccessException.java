@@ -1,7 +1,7 @@
 package fr.wedidit.superplanning.superplanning.database.exceptions;
 
-import fr.wedidit.superplanning.superplanning.database.Identifiable;
 import fr.wedidit.superplanning.superplanning.database.dao.DAO;
+import fr.wedidit.superplanning.superplanning.identifiables.Identifiable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
