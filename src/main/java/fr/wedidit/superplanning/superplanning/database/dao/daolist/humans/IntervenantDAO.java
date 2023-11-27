@@ -18,7 +18,7 @@ public class IntervenantDAO extends AbstractDAO<Intervenant> {
 
     @Override
     protected Intervenant instantiateEntity(ResultSet resultSet) throws SQLException {
-        
+
     }
 
     @Override
