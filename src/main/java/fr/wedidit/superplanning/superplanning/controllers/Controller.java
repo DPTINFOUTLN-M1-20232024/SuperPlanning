@@ -16,6 +16,7 @@ public class Controller {
     @FXML
     private void switchToWeekView(ActionEvent event) throws IOException {
         SceneSwitcher.switchToScene(event, "WeekView.fxml");
+        //SceneSwitcher.switchToScene(event, "WeekViewV2.fxml");
     }
     @FXML
     private void switchToDailyView(ActionEvent event) throws IOException {
