@@ -70,13 +70,15 @@ public class Main {
         try {
             startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2020-01-01 13:30:00.0");
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            log.error(e.getLocalizedMessage());
+            return;
         }
         Date endDate = null;
         try {
             endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2020-01-01 14:30:00");
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            log.error(e.getLocalizedMessage());
+            return;
         }
         Timestamp start = new Timestamp(startDate.getTime());
         Timestamp end = new Timestamp(endDate.getTime());

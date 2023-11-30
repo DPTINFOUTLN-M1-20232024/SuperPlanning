@@ -47,7 +47,9 @@ public class SessionDAO extends AbstractDAO<Session> {
             psFindAllSessionFromModule = connection.prepareStatement(requestFindAllSessionFromModule);
             psFindAllSessionFromModuleBetween = connection.prepareStatement(requestFindAllSessionFromModuleBetween);
         } catch (SQLException sqlException) {
-            throw new RuntimeException(sqlException.getLocalizedMessage());
+            throw new DataAccessException(SessionDAO.class,
+                    sqlException,
+                    "Unable create prepared statement in SessionDAO constructor");
         }
     }
 
@@ -64,14 +66,16 @@ public class SessionDAO extends AbstractDAO<Session> {
                 Timestamp finish = rsFindAllSessionFromModuleBetween.getTimestamp("FINISH");
 
                 long idInstructor = rsFindAllSessionFromModuleBetween.getLong("ID_INSTRUCTOR");
-                InstructorDAO instructorDAO = new InstructorDAO();
-                Instructor instructor = instructorDAO.find(idInstructor).orElseThrow(() -> new IdentifiableNotFoundException(idInstructor));
-                instructorDAO.close();
+                Instructor instructor = null;
+                try (InstructorDAO instructorDAO = new InstructorDAO()) {
+                    instructor = instructorDAO.find(idInstructor).orElseThrow(() -> new IdentifiableNotFoundException(idInstructor));
+                }
 
                 long idRoom = rsFindAllSessionFromModuleBetween.getLong("ID_ROOM");
-                RoomDAO roomDAO = new RoomDAO();
-                Room room = roomDAO.find(idRoom).orElseThrow(() -> new IdentifiableNotFoundException(idRoom));
-                roomDAO.close();
+                Room room;
+                try (RoomDAO roomDAO = new RoomDAO()) {
+                    room = roomDAO.find(idRoom).orElseThrow(() -> new IdentifiableNotFoundException(idRoom));
+                }
 
                 session = Session.of(id, begin, finish, module, instructor, room);
                 sessions.add(session);
@@ -100,14 +104,16 @@ public class SessionDAO extends AbstractDAO<Session> {
                 Timestamp finish = rsFindAllSessionFromModuleBetween.getTimestamp("FINISH");
 
                 long idInstructor = rsFindAllSessionFromModuleBetween.getLong("ID_INSTRUCTOR");
-                InstructorDAO instructorDAO = new InstructorDAO();
-                Instructor instructor = instructorDAO.find(idInstructor).orElseThrow(() -> new IdentifiableNotFoundException(idInstructor));
-                instructorDAO.close();
+                Instructor instructor = null;
+                try (InstructorDAO instructorDAO = new InstructorDAO()) {
+                    instructor = instructorDAO.find(idInstructor).orElseThrow(() -> new IdentifiableNotFoundException(idInstructor));
+                }
 
                 long idRoom = rsFindAllSessionFromModuleBetween.getLong("ID_ROOM");
-                RoomDAO roomDAO = new RoomDAO();
-                Room room = roomDAO.find(idRoom).orElseThrow(() -> new IdentifiableNotFoundException(idRoom));
-                roomDAO.close();
+                Room room;
+                try (RoomDAO roomDAO = new RoomDAO()) {
+                    room = roomDAO.find(idRoom).orElseThrow(() -> new IdentifiableNotFoundException(idRoom));
+                }
 
                 session = Session.of(id, begin, finish, module, instructor, room);
                 sessions.add(session);
