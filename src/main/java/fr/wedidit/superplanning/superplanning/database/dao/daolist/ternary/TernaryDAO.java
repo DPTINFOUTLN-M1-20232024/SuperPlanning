@@ -3,10 +3,12 @@ package fr.wedidit.superplanning.superplanning.database.dao.daolist.ternary;
 import fr.wedidit.superplanning.superplanning.database.dao.AbstractDAO;
 import fr.wedidit.superplanning.superplanning.database.datasources.DBCPDataSource;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
+import lombok.Getter;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
+@Getter
 public class TernaryDAO {
 
     private final String tableName;

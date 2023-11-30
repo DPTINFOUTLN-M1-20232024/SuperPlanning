@@ -12,7 +12,8 @@ import lombok.ToString;
 public class Student implements Identifiable {
 
     private final long id;
-    private final String firstname, lastname;
+    private final String firstname;
+    private final String lastname;
     private final Grade grade;
 
     private Student(long id, String firstname, String lastname, Grade grade) {

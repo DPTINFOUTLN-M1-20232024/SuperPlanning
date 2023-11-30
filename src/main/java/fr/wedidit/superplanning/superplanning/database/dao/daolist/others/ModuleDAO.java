@@ -30,7 +30,9 @@ public class ModuleDAO extends AbstractDAO<Module> {
                     """;
             psFindAllModuleFromGrade = connection.prepareStatement(request);
         } catch (SQLException sqlException) {
-            throw new RuntimeException(sqlException.getLocalizedMessage());
+            throw new DataAccessException(ModuleDAO.class,
+                    sqlException,
+                    "Unable to create prepared statement in ModuleDAO class");
         }
     }
 
