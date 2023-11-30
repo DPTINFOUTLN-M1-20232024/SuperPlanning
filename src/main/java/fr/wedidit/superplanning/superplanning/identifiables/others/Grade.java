@@ -8,22 +8,22 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class Promotion implements Identifiable {
+public class Grade implements Identifiable {
 
     private final long id;
     private final String name;
 
-    private Promotion(long id, String name) {
+    private Grade(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public static Promotion of(long id, String name) {
-        return new Promotion(id, name);
+    public static Grade of(long id, String name) {
+        return new Grade(id, name);
     }
 
-    public static Promotion of(String name) {
-        return new Promotion(-1, name);
+    public static Grade of(String name) {
+        return new Grade(-1, name);
     }
 
 }

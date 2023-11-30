@@ -1,14 +1,11 @@
 package fr.wedidit.superplanning.superplanning.database.dao;
 
 public enum TableType {
-    BATIMENT,
-    SALLE,
-    ETUDIANT,
-    INTERVENANT,
-    CRENEAU,
+    BUILDING,
+    ROOM,
+    STUDENT,
+    INSTRUCTOR,
+    SESSION,
     MODULE,
-    PROMOTION,
-
-
-    ETUDIANT_MODULE
+    GRADE
 }

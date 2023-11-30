@@ -27,11 +27,19 @@ public class StartH2 {
         } catch (IOException sqlException) {
             log.info("Configuration error. " + sqlException.getLocalizedMessage());
         }
+
         try (Connection connection = DBCPDataSource.getConnection()) {
             RunScript.execute(connection,
-                    new InputStreamReader(Objects.requireNonNull(StartH2.class.getClassLoader().getResourceAsStream("initDB.sql"))));
+                    new InputStreamReader(Objects.requireNonNull(StartH2.class.getClassLoader().getResourceAsStream("createDB.sql"))));
         } catch (SQLException sqlException) {
-            log.error("Unable to execute initDB.sql file:%s".formatted(sqlException.getLocalizedMessage()));
+            log.error("Unable to execute createDB.sql file:%s".formatted(sqlException.getLocalizedMessage()));
+        }
+
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            RunScript.execute(connection,
+                    new InputStreamReader(Objects.requireNonNull(StartH2.class.getClassLoader().getResourceAsStream("feedDB.sql"))));
+        } catch (SQLException sqlException) {
+            log.error("Unable to execute feedDB.sql file:%s".formatted(sqlException.getLocalizedMessage()));
         }
     }
 }

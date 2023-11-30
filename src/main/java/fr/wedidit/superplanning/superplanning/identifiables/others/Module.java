@@ -11,17 +11,17 @@ import lombok.ToString;
 public class Module implements Identifiable {
 
     private final long id;
-    private final String nom;
-    private final Promotion promotion;
+    private final String name;
+    private final Grade grade;
 
-    private Module(long id, String nom, Promotion promotion) {
+    private Module(long id, String name, Grade grade) {
         this.id = id;
-        this.nom = nom;
-        this.promotion = promotion;
+        this.name = name;
+        this.grade = grade;
     }
 
-    public static Module of(long id, String nom, Promotion promotion) {
-        return new Module(id, nom, promotion);
+    public static Module of(long id, String name, Grade grade) {
+        return new Module(id, name, grade);
     }
 
 }
