@@ -52,4 +52,5 @@ public class InstructorDAO extends AbstractDAO<Instructor> {
         }
         super.update();
     }
+
 }

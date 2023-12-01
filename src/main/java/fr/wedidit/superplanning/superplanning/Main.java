@@ -1,10 +1,13 @@
 package fr.wedidit.superplanning.superplanning;
 
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.humans.InstructorDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.humans.StudentDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.others.ModuleDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.others.SessionDAO;
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.ternary.SessionInstructorDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.database.exceptions.IdentifiableNotFoundException;
+import fr.wedidit.superplanning.superplanning.identifiables.humans.Instructor;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Module;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
@@ -68,7 +71,7 @@ public class Main {
 
         Date startDate = null;
         try {
-            startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2020-01-01 13:30:00.0");
+            startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2020-01-01 13:30:00");
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
             return;
@@ -93,6 +96,26 @@ public class Main {
         }
 
         sessions.forEach(session -> log.info(session.toString()));
+
+
+        Instructor instructor;
+        try (InstructorDAO instructorDAO = new InstructorDAO()) {
+            instructor = instructorDAO.find(1).orElseThrow(() -> new IdentifiableNotFoundException(1));
+        } catch (DataAccessException dataAccessException) {
+            log.error(dataAccessException.getLocalizedMessage());
+            log.info("test");
+            return;
+        }
+
+
+        try {
+            SessionInstructorDAO sessionInstructorDAO = new SessionInstructorDAO();
+            Set<Session> sessionsInstructor = sessionInstructorDAO.fromE2(instructor);
+            sessionsInstructor.forEach(session -> log.info(session.toString()));
+        } catch (DataAccessException dataAccessException) {
+            log.error(dataAccessException.getLocalizedMessage());
+        }
+
 
     }
 
