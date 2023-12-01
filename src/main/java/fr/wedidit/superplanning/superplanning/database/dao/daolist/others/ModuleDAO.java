@@ -61,7 +61,7 @@ public class ModuleDAO extends AbstractDAO<Module> {
     @Override
     protected Module instantiateEntity(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong("ID");
-        String nom = resultSet.getString("NOM");
+        String nom = resultSet.getString("NAME");
 
         long idGrade = resultSet.getLong("ID_GRADE");
         Grade grade;

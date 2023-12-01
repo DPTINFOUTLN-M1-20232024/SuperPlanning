@@ -7,5 +7,6 @@ public enum TableType {
     INSTRUCTOR,
     SESSION,
     MODULE,
-    GRADE
+    GRADE,
+    SESSION_INSTRUCTOR
 }
