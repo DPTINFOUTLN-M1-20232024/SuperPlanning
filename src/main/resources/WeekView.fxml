@@ -1,11 +1,215 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.wedidit.superplanning.superplanning.controllers.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #23272a;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.wedidit.superplanning.superplanning.controllers.Controller">
    <children>
-      <Button layoutX="719.0" layoutY="84.0" mnemonicParsing="false" onAction="#switchToDailyView" text="Daily" />
+      <BorderPane layoutX="434.0" layoutY="29.0" prefHeight="88.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button layoutX="118.0" layoutY="33.0" mnemonicParsing="false" onAction="#switchToDailyView" style="-fx-background-color: #18b103;" text="Accueil" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="-47.0" layoutY="-26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <image>
+                        <Image url="@image/Superplanning.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" prefHeight="21.0" prefWidth="199.0" text="Superplanning" textFill="WHITE">
+                     <font>
+                        <Font name="Likhan" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </left>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="198.0" layoutY="30.0" text="Emploi du temps hebdomadaire" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+         </center>
+         <right>
+            <AnchorPane prefHeight="100.0" prefWidth="175.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane layoutX="-128.0" layoutY="-67.0" prefHeight="91.0" prefWidth="175.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="nameUser" alignment="CENTER" layoutX="163.0" layoutY="19.0" text="Simpson" textFill="WHITE" translateY="-10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="firstNameUser" alignment="CENTER" layoutX="147.0" layoutY="40.0" text="Homer" textFill="WHITE" translateY="-10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="promotionUser" alignment="CENTER" layoutX="91.0" layoutY="64.0" prefHeight="21.0" prefWidth="199.0" text="L1 Informatique" textFill="WHITE" translateY="-10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </right>
+      </BorderPane>
+      <AnchorPane layoutX="32.0" layoutY="129.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Pagination fx:id="weekPagination" layoutX="38.0" layoutY="9.0" maxPageIndicatorCount="44" prefHeight="46.0" prefWidth="1600.0" translateY="-40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <GridPane gridLinesVisible="true" layoutX="33.0" layoutY="61.0" style="-fx-border-color: #7289da; -fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="30.0" />
+                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="150.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="150.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="150.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="150.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="150.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff7a21" height="460.0" stroke="BLACK" strokeType="INSIDE" width="98.0" GridPane.rowIndex="2" />
+                  <Label text="8h00" translateX="60.0" translateY="-35.0">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <Label text="18h00" translateX="52.0" translateY="35.0" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <Line endX="980.0" startX="-100.0" stroke="#a88e8e" strokeWidth="2.0" GridPane.columnIndex="1" />
+                  <Line endX="980.0" startX="-100.0" stroke="#a88e8e" strokeWidth="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Line endX="980.0" startX="-100.0" stroke="#a88e8e" strokeWidth="2.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Line endX="980.0" startX="-100.0" stroke="#a88e8e" strokeWidth="2.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Line endX="980.0" startX="-100.0" stroke="#a88e8e" strokeWidth="2.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="9h00" translateX="60.0">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="11h00" translateX="52.0" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="13h00" translateX="52.0" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="15h00" translateX="52.0" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="17h00" translateX="52.0" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="-22.5" GridPane.columnIndex="1" />
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="22.5" GridPane.columnIndex="1" />
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="-22.5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="22.5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="-22.5" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="22.5" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="22.5" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="-22.5" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="22.5" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Line endX="980.0" startX="-100.0" stroke="#e4d9d9" strokeWidth="2.0" translateY="-22.5" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff7a21" height="20.0" layoutX="9.0" layoutY="4.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="3.0" translateY="110.0" width="95.0" />
+            <Label layoutX="6.0" layoutY="15.0" text="10h00" translateX="57.0" translateY="100.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff7a21" height="20.0" layoutX="11.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="1.0" translateY="200.0" width="95.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff7a21" height="20.0" layoutX="13.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-1.0" translateY="280.0" width="95.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff7a21" height="20.0" layoutX="10.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="2.0" translateY="380.0" width="95.0" />
+            <Label layoutX="6.0" layoutY="15.0" text="12h00" translateX="57.0" translateY="192.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="6.0" layoutY="15.0" text="14h00" translateX="57.0" translateY="284.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="6.0" layoutY="15.0" text="16h00" translateX="57.0" translateY="375.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <GridPane gridLinesVisible="true" layoutX="10.0" style="-fx-background-color: #ff7a21; -fx-border-color: #7289da;" translateY="-10.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="98.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="216.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="216.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="216.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="216.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="216.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="40.0" valignment="TOP" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="mondayDate" alignment="CENTER" prefHeight="21.0" prefWidth="199.0" text="Lundi .. Septembre" translateX="8.0" translateY="9.0" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="tuesdayDate" alignment="CENTER" prefHeight="21.0" prefWidth="199.0" text="Mardi .. Septembre" translateX="8.0" translateY="9.0" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="wednesdayDate" alignment="CENTER" prefHeight="21.0" prefWidth="199.0" text="Mercredi .. Septembre" translateX="8.0" translateY="9.0" GridPane.columnIndex="3">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="thursdayDate" alignment="CENTER" prefHeight="21.0" prefWidth="199.0" text="Jeudi .. Septembre" translateX="8.0" translateY="9.0" GridPane.columnIndex="4">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="fridayDate" alignment="CENTER" prefHeight="21.0" prefWidth="199.0" text="Vendredi .. Septembre" translateX="8.0" translateY="9.0" GridPane.columnIndex="5">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
