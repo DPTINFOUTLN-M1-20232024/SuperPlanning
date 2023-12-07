@@ -8,6 +8,10 @@ import java.io.IOException;
 
 public class WeekViewController {
 
+    /* MODEL PART */
+
+
+    /* GUI PART */
     /* User informations */
     @FXML
     private Label nameUser;
@@ -41,6 +45,14 @@ public class WeekViewController {
     @FXML
     private void switchToDailyView(ActionEvent event) throws IOException {
         SceneSwitcher.switchToScene(event, "DailyView.fxml");
+    }
+
+    private void showWeekSessions() {
+        /*
+        Shows every sessions of the week for a selected student.
+         */
+        // todo : Implanter ce code avec des objets de la classe SessionGUI
+
     }
 
 }
