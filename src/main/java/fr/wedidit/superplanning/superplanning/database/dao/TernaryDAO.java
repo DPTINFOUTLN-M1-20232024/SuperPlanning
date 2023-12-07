@@ -73,8 +73,6 @@ public abstract class TernaryDAO<E1 extends Identifiable, E2 extends Identifiabl
                     E1 e1 = dao.find(idSession).orElseThrow(() -> new IdentifiableNotFoundException(idSession));
                     set.add(e1);
                 }
-            } catch (DataAccessException dataAccessException) {
-                log.error(dataAccessException.getLocalizedMessage());
             }
 
         } catch (SQLException sqlException) {
@@ -106,8 +104,6 @@ public abstract class TernaryDAO<E1 extends Identifiable, E2 extends Identifiabl
                     E2 e2 = dao.find(idSession).orElseThrow(() -> new IdentifiableNotFoundException(idSession));
                     set.add(e2);
                 }
-            } catch (DataAccessException dataAccessException) {
-                log.error(dataAccessException.getLocalizedMessage());
             }
 
         } catch (SQLException sqlException) {
