@@ -54,5 +54,4 @@ public class WeekViewController {
         // todo : Implanter ce code avec des objets de la classe SessionGUI
 
     }
-
 }
