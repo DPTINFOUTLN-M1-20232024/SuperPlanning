@@ -9,23 +9,27 @@ import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Grade;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Module;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
+import fr.wedidit.superplanning.superplanning.utils.gui.SessionWeekGUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
+import lombok.Setter;
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.util.*;
 
+@Setter
 public class WeekViewController {
-    /*DAO utilisation*/
+    /* MODEL PART */
+
     private SessionDAO sessionDAO;
     private StudentDAO studentDAO;
     private ModuleDAO moduleDAO;
 
-    /* MODEL PART */
-
+    private Set<SessionWeekGUI> sessionGUISet = new HashSet<>();
 
     /* GUI PART */
     /* User informations */
@@ -56,6 +60,14 @@ public class WeekViewController {
 
     @FXML
     private Label fridayDate;
+
+    public WeekViewController() {
+        try {
+            showWeekSessions(1, Timestamp.valueOf("2020-01-01 08:30:00"), Timestamp.valueOf("2020-01-05 18:00:00"));
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
     /* Methods */
     @FXML
@@ -93,13 +105,14 @@ public class WeekViewController {
         for (Session session : sessionsWeek) {
             DayOfWeek dayOfWeek = session.getBegin().toLocalDateTime().getDayOfWeek();
             sessionsCountByDay.put(dayOfWeek, sessionsCountByDay.get(dayOfWeek) + 1);
+            sessionGUISet.add(SessionWeekGUI.of(session));
         }
 
 
-        mondayDate.setText("Monday: " + sessionsCountByDay.get(DayOfWeek.MONDAY));
-        tuesdayDate.setText("Tuesday: " + sessionsCountByDay.get(DayOfWeek.TUESDAY));
-        wednesdayDate.setText("Wednesday: " + sessionsCountByDay.get(DayOfWeek.WEDNESDAY));
-        thursdayDate.setText("Thursday: " + sessionsCountByDay.get(DayOfWeek.THURSDAY));
-        fridayDate.setText("Friday: " + sessionsCountByDay.get(DayOfWeek.FRIDAY));
+        mondayDate.setText("Lundi " + sessionsCountByDay.get(DayOfWeek.MONDAY));
+        tuesdayDate.setText("Mardi " + sessionsCountByDay.get(DayOfWeek.TUESDAY));
+        wednesdayDate.setText("Mercredi " + sessionsCountByDay.get(DayOfWeek.WEDNESDAY));
+        thursdayDate.setText("Jeudi " + sessionsCountByDay.get(DayOfWeek.THURSDAY));
+        fridayDate.setText("Vendredi " + sessionsCountByDay.get(DayOfWeek.FRIDAY));
     }
     }
