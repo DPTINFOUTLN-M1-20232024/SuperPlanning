@@ -31,18 +31,20 @@ public class Session implements Identifiable {
     private final Module module;
     private final Instructor instructor;
     private final Room room;
+    private final SessionType sessionType;
 
-    private Session(long id, Timestamp begin, Timestamp finish, Module module, Instructor instructor, Room room) {
+    private Session(long id, Timestamp begin, Timestamp finish, Module module, Instructor instructor, Room room, SessionType sessionType) {
         this.id = id;
         this.begin = begin;
         this.finish = finish;
         this.module = module;
         this.instructor = instructor;
         this.room = room;
+        this.sessionType = sessionType;
     }
 
-    public static Session of(long id, Timestamp begin, Timestamp finish, Module module, Instructor instructor, Room room) {
-        return new Session(id, begin, finish, module, instructor, room);
+    public static Session of(long id, Timestamp begin, Timestamp finish, Module module, Instructor instructor, Room room, SessionType sessionType) {
+        return new Session(id, begin, finish, module, instructor, room, sessionType);
     }
 
     public static Set<Session> getSessionsFromStudent(Student student, String beginDay, String endDay) throws DataAccessException, ParseException{
