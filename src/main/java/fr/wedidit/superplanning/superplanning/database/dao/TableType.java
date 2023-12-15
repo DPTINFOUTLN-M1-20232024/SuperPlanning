@@ -8,5 +8,5 @@ public enum TableType {
     SESSION,
     MODULE,
     GRADE,
-    SESSION_INSTRUCTOR
+    STUDENT_CONNECTION, SESSION_INSTRUCTOR
 }

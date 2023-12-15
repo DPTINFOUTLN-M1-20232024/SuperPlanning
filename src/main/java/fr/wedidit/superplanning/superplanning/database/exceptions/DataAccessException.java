@@ -1,6 +1,5 @@
 package fr.wedidit.superplanning.superplanning.database.exceptions;
 
-import fr.wedidit.superplanning.superplanning.database.dao.DAO;
 import fr.wedidit.superplanning.superplanning.identifiables.Identifiable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -18,7 +17,7 @@ public class DataAccessException extends Exception {
      * @param reason Cause of error
      * @param <S> DAO class concerned
      */
-    public <S extends DAO<?>> DataAccessException(Class<S> daoClass, SQLException sqlException, Identifiable identifiable, String reason) {
+    public DataAccessException(Class<?> daoClass, SQLException sqlException, Identifiable identifiable, String reason) {
         super("[%s] %s (%s):%n%s".formatted(daoClass.getName(), reason, identifiable.toString(), sqlException.getLocalizedMessage()));
     }
 
@@ -28,7 +27,7 @@ public class DataAccessException extends Exception {
      * @param reason Cause of error
      * @param <S> DAO class concerned
      */
-    public <S extends DAO<?>> DataAccessException(Class<S> daoClass, SQLException sqlException, String reason) {
+    public DataAccessException(Class<?> daoClass, SQLException sqlException, String reason) {
         super("[%s] %s:%n%s".formatted(daoClass.getName(), reason, sqlException.getLocalizedMessage()));
     }
 

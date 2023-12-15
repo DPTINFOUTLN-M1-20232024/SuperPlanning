@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,10 @@ public abstract class AbstractDAO<E extends Identifiable> implements DAO<E> {
                     )
             );
         }
+    }
+
+    protected AbstractDAO(Enum<?> tableEnum, Class<? extends Enum<?>> enumColumns) throws DataAccessException {
+        this(tableEnum, Arrays.stream(enumColumns.getEnumConstants()).map(Enum::name).toArray(String[]::new));
     }
 
     /**
