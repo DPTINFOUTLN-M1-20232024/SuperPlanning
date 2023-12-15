@@ -15,9 +15,7 @@ import java.util.Objects;
  */
 class SceneSwitcher {
 
-    public SceneSwitcher() {
-        throw new IllegalStateException("Utility class shouldn't be instanced");
-    }
+    private SceneSwitcher() {}
 
     /**
      * Method to switch from the current scene to the one described in {@paramref fileName}"

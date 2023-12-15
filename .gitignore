@@ -13,6 +13,7 @@ target/
 mvnw
 mvnw.cmd
 .mvn/
+.Rhistory
 
 ### Eclipse ###
 .apt_generated
