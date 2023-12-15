@@ -29,6 +29,9 @@ public class WeekViewController {
     private StudentDAO studentDAO;
     private ModuleDAO moduleDAO;
 
+
+
+
     private Set<SessionWeekGUI> sessionGUISet = new HashSet<>();
 
     /* GUI PART */
@@ -61,14 +64,18 @@ public class WeekViewController {
     @FXML
     private Label fridayDate;
 
-    public WeekViewController() {
+    public WeekViewController(SessionDAO sessionDAO, StudentDAO studentDAO, ModuleDAO moduleDAO) {
+        this.sessionDAO = sessionDAO;
+        this.studentDAO = studentDAO;
+        this.moduleDAO = moduleDAO;
+
         try {
             showWeekSessions(1, Timestamp.valueOf("2020-01-01 08:30:00"), Timestamp.valueOf("2020-01-05 18:00:00"));
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
     }
-
+   
     /* Methods */
     @FXML
     private void switchToDailyView(ActionEvent event) throws IOException {
