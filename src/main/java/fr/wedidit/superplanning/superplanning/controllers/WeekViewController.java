@@ -100,27 +100,9 @@ public class WeekViewController {
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
         }
+        //Rectangle rectangle = new Rectangle(50, 50, 400, 400);
+        //edtFrame.getChildren().add(rectangle);
         sessionsWeek.forEach(session -> sessionGUISet.add(SessionWeekGUI.of(edtFrame, session)));
     }
 
-    private void displaySessionsByDay(Set<Session> sessionsWeek) {
-
-        Map<DayOfWeek, Long> sessionsCountByDay = new HashMap<>();
-        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
-            sessionsCountByDay.put(dayOfWeek, 0L);
-        }
-
-        for (Session session : sessionsWeek) {
-            DayOfWeek dayOfWeek = session.getBegin().toLocalDateTime().getDayOfWeek();
-            sessionsCountByDay.put(dayOfWeek, sessionsCountByDay.get(dayOfWeek) + 1);
-            sessionGUISet.add(SessionWeekGUI.of(edtFrame, session));
-        }
-
-
-        mondayDate.setText("Lundi " + sessionsCountByDay.get(DayOfWeek.MONDAY));
-        tuesdayDate.setText("Mardi " + sessionsCountByDay.get(DayOfWeek.TUESDAY));
-        wednesdayDate.setText("Mercredi " + sessionsCountByDay.get(DayOfWeek.WEDNESDAY));
-        thursdayDate.setText("Jeudi " + sessionsCountByDay.get(DayOfWeek.THURSDAY));
-        fridayDate.setText("Vendredi " + sessionsCountByDay.get(DayOfWeek.FRIDAY));
-    }
 }

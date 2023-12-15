@@ -1,7 +1,6 @@
 package fr.wedidit.superplanning.superplanning.identifiables.others;
 
 import javafx.scene.paint.Paint;
-import lombok.Getter;
 
 public enum SessionType {
 

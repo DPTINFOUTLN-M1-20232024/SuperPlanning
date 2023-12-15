@@ -24,14 +24,15 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) {
-        try{
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("Connection.fxml")));
-            stage.setScene(new Scene(root));
-            loadProperties();
-            stage.show();
-        }catch(Exception e){
-            e.printStackTrace();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("Connection.fxml")));
+        } catch (IOException ioException) {
+            log.error(ioException.getLocalizedMessage());
         }
+        stage.setScene(new Scene(root));
+        loadProperties();
+        stage.show();
     }
     public static void main(String[] args) {
         launch(args);

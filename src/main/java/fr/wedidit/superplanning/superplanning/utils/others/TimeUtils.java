@@ -8,6 +8,8 @@ import java.time.temporal.TemporalAdjusters;
 
 public class TimeUtils {
 
+    private TimeUtils() {}
+
     public static Timestamp[] getCurrentWeekDelimitation() {
         LocalDateTime now = LocalDateTime.now();
 
@@ -32,7 +34,6 @@ public class TimeUtils {
     public static String getDateInfo(Timestamp timestamp, String format) {
         LocalDateTime localDateTime = timestamp.toLocalDateTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-        String formattedDate = localDateTime.format(formatter);
-        return formattedDate;
+        return localDateTime.format(formatter);
     }
 }
