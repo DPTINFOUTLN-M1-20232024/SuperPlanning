@@ -50,7 +50,7 @@ public class ConnectionController {
 
         // Swap to the next view
         Account.connect(student);
-        String fxmlFileName = "WeekView.fxml";
+        String fxmlFileName = "DailyView.fxml";
         try {
             SceneSwitcher.switchToScene(actionEvent, fxmlFileName);
         } catch (IOException e) {
