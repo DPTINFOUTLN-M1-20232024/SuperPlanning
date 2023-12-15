@@ -10,6 +10,7 @@ import fr.wedidit.superplanning.superplanning.identifiables.concretes.Room;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Instructor;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Module;
+import fr.wedidit.superplanning.superplanning.identifiables.others.SessionType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.PreparedStatement;
@@ -30,13 +31,13 @@ public class SessionDAO extends AbstractDAO<Session> {
 
 
         String requestFindAllSessionFromModule = """
-                        SELECT SESSION.ID, SESSION.BEGIN, SESSION.FINISH, SESSION.ID_INSTRUCTOR, SESSION.ID_ROOM
+                        SELECT SESSION.ID, SESSION.BEGIN, SESSION.FINISH, SESSION.ID_INSTRUCTOR, SESSION.ID_ROOM, SESSION.SESSION_TYPE
                         FROM SESSION
                         WHERE SESSION.ID_MODULE = ?;
                         """;
 
         String requestFindAllSessionFromModuleBetween = """
-                        SELECT SESSION.ID, SESSION.BEGIN, SESSION.FINISH, SESSION.ID_INSTRUCTOR, SESSION.ID_ROOM
+                        SELECT SESSION.ID, SESSION.BEGIN, SESSION.FINISH, SESSION.ID_INSTRUCTOR, SESSION.ID_ROOM, SESSION.SESSION_TYPE
                         FROM SESSION
                         WHERE SESSION.ID_MODULE = ?
                         AND ? <= SESSION.BEGIN
@@ -105,7 +106,10 @@ public class SessionDAO extends AbstractDAO<Session> {
                 room = roomDAO.find(idRoom).orElseThrow(() -> new IdentifiableNotFoundException(idRoom));
             }
 
-            session = Session.of(id, begin, finish, module, instructor, room);
+            String sessionTypeString = rsFindAllSessionFromModuleBetween.getString(SessionColumns.SESSION_TYPE.name());
+            SessionType sessionType = SessionType.valueOf(sessionTypeString);
+
+            session = Session.of(id, begin, finish, module, instructor, room, sessionType);
             sessions.add(session);
         }
     }
@@ -143,12 +147,17 @@ public class SessionDAO extends AbstractDAO<Session> {
             return null;
         }
 
+        String sessionTypeString = resultSet.getString(SessionColumns.SESSION_TYPE.name());
+        SessionType sessionType = SessionType.valueOf(sessionTypeString);
+
+
         return Session.of(id,
                 start,
                 end,
                 module,
                 instructor,
-                room);
+                room,
+                sessionType);
 
     }
 
@@ -159,7 +168,8 @@ public class SessionDAO extends AbstractDAO<Session> {
             psPersist.setTimestamp(2, session.getFinish());
             psPersist.setLong(3, session.getModule().getId());
             psPersist.setLong(4, session.getInstructor().getId());
-            psPersist.setLong(5, session.getRoom().getId());
+            psPersist.setString(5, session.getSessionType().name());
+            psPersist.setLong(6, session.getRoom().getId());
         } catch (SQLException sqlException) {
             throw new DataAccessException(SessionDAO.class,
                     sqlException,
@@ -177,7 +187,8 @@ public class SessionDAO extends AbstractDAO<Session> {
             psUpdate.setLong(3, session.getModule().getId());
             psUpdate.setLong(4, session.getInstructor().getId());
             psUpdate.setLong(5, session.getRoom().getId());
-            psUpdate.setLong(6, session.getId());
+            psUpdate.setString(6, session.getSessionType().name());
+            psUpdate.setLong(7, session.getId());
         } catch (SQLException sqlException) {
             throw new DataAccessException(SessionDAO.class,
                     sqlException,
@@ -192,7 +203,8 @@ public class SessionDAO extends AbstractDAO<Session> {
         FINISH,
         ID_MODULE,
         ID_INSTRUCTOR,
-        ID_ROOM;
+        ID_ROOM,
+        SESSION_TYPE;
     }
 
 }
