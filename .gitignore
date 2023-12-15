@@ -14,6 +14,7 @@ mvnw
 mvnw.cmd
 .mvn/
 .Rhistory
+null/
 
 ### Eclipse ###
 .apt_generated
