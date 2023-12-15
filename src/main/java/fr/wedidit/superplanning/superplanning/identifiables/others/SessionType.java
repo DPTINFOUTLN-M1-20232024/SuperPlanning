@@ -3,21 +3,27 @@ package fr.wedidit.superplanning.superplanning.identifiables.others;
 import javafx.scene.paint.Paint;
 import lombok.Getter;
 
-@Getter
 public enum SessionType {
 
-    CM("#8sg5sd"),
-    TD("#8sg5sd"),
-    TP("#8sg5sd"),
-    CC("#8sg5sd"),
-    CT("#8sg5sd");
+    CM("#EBFB7A"),
+    TD("#4BDFDF"),
+    TP("#20DE59"),
+    CC("#E21A1A"),
+    CT("#E21A1A");
 
     private final String colorHexa;
-    private final Paint colorPaint;
+    private Paint colorPaint;
 
     private SessionType(String colorHexa) {
         this.colorHexa = colorHexa;
-        this.colorPaint = Paint.valueOf(this.colorHexa);
+    }
+
+    public String getColorHexa() {
+        return colorHexa;
+    }
+
+    public Paint getColorPaint() {
+        return Paint.valueOf(this.colorHexa);
     }
 
 }

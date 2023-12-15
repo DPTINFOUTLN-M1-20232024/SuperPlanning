@@ -10,18 +10,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalUnit;
-import java.time.temporal.WeekFields;
 import java.util.*;
 
 @Setter
@@ -32,6 +30,8 @@ public class WeekViewController {
     private Set<SessionWeekGUI> sessionGUISet = new HashSet<>();
 
     /* GUI PART */
+    @FXML
+    private AnchorPane edtFrame;
     /* User information */
     @FXML
     private Label nameUser;
@@ -53,7 +53,8 @@ public class WeekViewController {
     @FXML
     private Label fridayDate;
 
-    public WeekViewController() {
+    @FXML
+    private void initialize() {
         Timestamp[] currentWeekDelimitation = TimeUtils.getCurrentWeekDelimitation();
         initStudentInfos();
         initDaysLabels(currentWeekDelimitation[0]);
@@ -99,7 +100,7 @@ public class WeekViewController {
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
         }
-        sessionsWeek.forEach(session -> sessionGUISet.add(SessionWeekGUI.of(session)));
+        sessionsWeek.forEach(session -> sessionGUISet.add(SessionWeekGUI.of(edtFrame, session)));
     }
 
     private void displaySessionsByDay(Set<Session> sessionsWeek) {
@@ -112,7 +113,7 @@ public class WeekViewController {
         for (Session session : sessionsWeek) {
             DayOfWeek dayOfWeek = session.getBegin().toLocalDateTime().getDayOfWeek();
             sessionsCountByDay.put(dayOfWeek, sessionsCountByDay.get(dayOfWeek) + 1);
-            sessionGUISet.add(SessionWeekGUI.of(session));
+            sessionGUISet.add(SessionWeekGUI.of(edtFrame, session));
         }
 
 

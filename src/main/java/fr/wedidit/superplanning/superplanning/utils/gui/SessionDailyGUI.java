@@ -2,6 +2,7 @@ package fr.wedidit.superplanning.superplanning.utils.gui;
 
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
 import fr.wedidit.superplanning.superplanning.identifiables.others.SessionType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
@@ -15,16 +16,17 @@ public class SessionDailyGUI extends AbstractSessionGUI{
 
     private Rectangle emplacementRectangle;
 
-    public static SessionDailyGUI of(Session session) {
-        SessionDailyGUI sessionDailyGUI = new SessionDailyGUI(session);
+    public static SessionDailyGUI of(AnchorPane edtFrame, Session session) {
+        SessionDailyGUI sessionDailyGUI = new SessionDailyGUI(edtFrame, session);
         sessionDailyGUI.prepareWidgets();
         sessionDailyGUI.moveWidgets();
+        sessionDailyGUI.draw();
         return sessionDailyGUI;
     }
 
-    private SessionDailyGUI(Session session) {
-        super(session);
-        this.emplacementRectangle = new Rectangle(SessionDailyGUI.XSHIFT, SessionDailyGUI.YSHIFT * this.sizeRectangle());
+    private SessionDailyGUI(AnchorPane edtFrame, Session session) {
+        super(edtFrame, session);
+        this.emplacementRectangle = new Rectangle(SessionDailyGUI.XSHIFT, SessionDailyGUI.YSHIFT * super.getRectangleSize());
     }
 
     @Override
@@ -54,5 +56,11 @@ public class SessionDailyGUI extends AbstractSessionGUI{
         this.instructorNameLabel.setTranslateY(SessionDailyGUI.YINITPOS + ((int)yLabelShift)*3);
         this.roomNameLabel.setTranslateX(SessionDailyGUI.XINITPOS + (int)xLabelShift);
         this.roomNameLabel.setTranslateY(SessionDailyGUI.YINITPOS + ((int)yLabelShift)*5);
+    }
+
+    @Override
+    protected void draw() {
+        super.draw();
+        super.edtFrame.getChildren().add(emplacementRectangle);
     }
 }
