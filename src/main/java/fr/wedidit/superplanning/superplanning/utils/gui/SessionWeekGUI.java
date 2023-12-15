@@ -1,6 +1,7 @@
 package fr.wedidit.superplanning.superplanning.utils.gui;
 
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
+import fr.wedidit.superplanning.superplanning.identifiables.others.SessionType;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import lombok.Getter;
@@ -40,7 +41,7 @@ public class SessionWeekGUI extends AbstractSessionGUI {
          */
 
         //todo : Rajouter la couleur changeable par rapport à la session
-        this.emplacementRectangle.setFill(Paint.valueOf(ColorOfSession.CM));
+        this.emplacementRectangle.setFill(SessionType.CM.getColorPaint());
         this.moduleNameLabel.setTextFill(Paint.valueOf(AbstractSessionGUI.LABEL_COLOR));
         this.instructorNameLabel.setTextFill(Paint.valueOf(AbstractSessionGUI.LABEL_COLOR));
         this.roomNameLabel.setTextFill(Paint.valueOf(AbstractSessionGUI.LABEL_COLOR));

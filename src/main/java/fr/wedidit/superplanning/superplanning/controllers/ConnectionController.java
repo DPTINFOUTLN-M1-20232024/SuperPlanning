@@ -40,7 +40,7 @@ public class ConnectionController {
             return;
         }
 
-        // Check if mail, password is correct
+        // Check if mail and password is correct
         if (student == null) {
             String messageError = "Mail or password is not correct";
             log.error(messageError);
