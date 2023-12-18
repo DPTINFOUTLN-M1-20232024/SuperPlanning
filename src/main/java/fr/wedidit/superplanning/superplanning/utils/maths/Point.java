@@ -1,4 +1,4 @@
-package fr.wedidit.superplanning.superplanning.utils;
+package fr.wedidit.superplanning.superplanning.utils.maths;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

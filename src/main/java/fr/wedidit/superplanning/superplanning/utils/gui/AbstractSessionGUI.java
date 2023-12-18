@@ -1,17 +1,18 @@
 package fr.wedidit.superplanning.superplanning.utils.gui;
 
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
-import fr.wedidit.superplanning.superplanning.utils.Point;
+import fr.wedidit.superplanning.superplanning.utils.maths.Point;
+import fr.wedidit.superplanning.superplanning.vues.Popup;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -34,10 +35,10 @@ public class AbstractSessionGUI {
 
     // FXML
     private AnchorPane edtFrame;
-    private Label moduleNameLabel;
-    private Label instructorNameLabel;
-    private Label roomNameLabel;
+    private Label labelInfo;
+    @Getter
     private Rectangle sessionRectangle;
+    private final String sessionInfos;
 
     protected AbstractSessionGUI(AnchorPane edtFrame, Session session, int startX, int startY, int shiftX, int totalY) {
         this.session = session;
@@ -63,24 +64,33 @@ public class AbstractSessionGUI {
                 shiftX,
                 (int) div
         );
-        this.moduleNameLabel = new Label(session.getModule().getName());
-        this.instructorNameLabel = new Label(session.getInstructor().getLastname());
-        this.roomNameLabel = new Label(session.getRoom().getName());
+        this.sessionInfos = "Module: %s%nProfesseur: %s%nSalle: %s".formatted(
+                session.getModule().getName(),
+                session.getInstructor().getLastname(),
+                session.getRoom().getName()
+        );
+        this.labelInfo = new Label(sessionInfos);
         this.sessionRectangle = new Rectangle();
+        this.sessionRectangle.setOnMouseClicked(t -> Popup.popup("Informations du cours", sessionInfos));
+        this.labelInfo.setOnMouseClicked(t -> Popup.popup("Informations du cours", sessionInfos));
     }
 
     protected void draw() {
         this.edtFrame.getChildren().add(sessionRectangle);
-        this.edtFrame.getChildren().add(moduleNameLabel);
-        this.edtFrame.getChildren().add(instructorNameLabel);
-        this.edtFrame.getChildren().add(roomNameLabel);
+        this.edtFrame.getChildren().add(labelInfo);
+    }
+
+    public void buildLabels() {
+        labelInfo.setMaxWidth(this.drawingRectangleSize.getX());
+        labelInfo.setMaxHeight(this.drawingRectangleSize.getY());
+        labelInfo.setFont(new Font("Arial", 16));
+        labelInfo.setLayoutX(drawingRectangleCoords.getX());
+        labelInfo.setLayoutY(drawingRectangleCoords.getY());
     }
 
     public void colorWidgets() {
         this.sessionRectangle.setFill(session.getSessionType().getColorPaint());
-        this.moduleNameLabel.setTextFill(Paint.valueOf(AbstractSessionGUI.LABEL_COLOR));
-        this.instructorNameLabel.setTextFill(Paint.valueOf(AbstractSessionGUI.LABEL_COLOR));
-        this.roomNameLabel.setTextFill(Paint.valueOf(AbstractSessionGUI.LABEL_COLOR));
+        this.labelInfo.setTextFill(Paint.valueOf(AbstractSessionGUI.LABEL_COLOR));
     }
 
     public void moveWidgets() {
@@ -88,18 +98,11 @@ public class AbstractSessionGUI {
         this.sessionRectangle.setY(drawingRectangleCoords.getY());
         this.sessionRectangle.setWidth(drawingRectangleSize.getX());
         this.sessionRectangle.setHeight(drawingRectangleSize.getY());
+    }
 
-        // Label module name
-        this.moduleNameLabel.setLayoutX(drawingRectangleCoords.getX());
-        this.moduleNameLabel.setLayoutY(drawingRectangleCoords.getY());
-
-        // Label instructor name
-        this.instructorNameLabel.setLayoutX(drawingRectangleCoords.getX());
-        this.instructorNameLabel.setLayoutY(drawingRectangleCoords.getY());
-
-        // Label room name
-        this.roomNameLabel.setLayoutX(drawingRectangleCoords.getX());
-        this.roomNameLabel.setLayoutY(drawingRectangleCoords.getY());
+    public void clear() {
+        this.edtFrame.getChildren().remove(this.sessionRectangle);
+        this.edtFrame.getChildren().remove(labelInfo);
     }
 
 }

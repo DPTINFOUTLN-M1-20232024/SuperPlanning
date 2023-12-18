@@ -55,14 +55,27 @@ public class WeekViewController {
 
     @FXML
     private void initialize() {
-        Timestamp[] currentWeekDelimitation = TimeUtils.getCurrentWeekDelimitation();
+        weekPagination.setPageFactory((pageIndex) -> {
+            sessionGUISet.forEach(sessionWeekGUI -> sessionWeekGUI.clear());
+            Timestamp[] currentWeekDelimitation = TimeUtils.getCurrentWeekDelimitation(pageIndex);
+
+            initDaysLabels(currentWeekDelimitation[0]);
+            try {
+                showWeekSessions(currentWeekDelimitation[0], currentWeekDelimitation[1]);
+            } catch (ParseException parseException) {
+                log.error(parseException.getLocalizedMessage());
+            }
+            log.info(String.valueOf(pageIndex));
+            return new Label("Content for page " + pageIndex);
+        });
+
+        int weekNumber = TimeUtils.getPaginationIndexFromCurrentDate();
+        log.info("weekNumber: %d".formatted(weekNumber));
+        weekPagination.setPageCount(52);
+        weekPagination.setCurrentPageIndex((weekNumber - 33) % 53);
+
         initStudentInfos();
-        initDaysLabels(currentWeekDelimitation[0]);
-        try {
-            showWeekSessions(currentWeekDelimitation[0], currentWeekDelimitation[1]);
-        } catch (ParseException parseException) {
-            log.error(parseException.getLocalizedMessage());
-        }
+
     }
 
     private void initDaysLabels(Timestamp beginWeek) {
@@ -100,8 +113,6 @@ public class WeekViewController {
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
         }
-        //Rectangle rectangle = new Rectangle(50, 50, 400, 400);
-        //edtFrame.getChildren().add(rectangle);
         sessionsWeek.forEach(session -> sessionGUISet.add(SessionWeekGUI.of(edtFrame, session)));
     }
 

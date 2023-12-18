@@ -32,6 +32,7 @@ public class MainApplication extends Application {
         }
         stage.setScene(new Scene(root));
         loadProperties();
+        //stage.setResizable(false);
         stage.show();
     }
     public static void main(String[] args) {

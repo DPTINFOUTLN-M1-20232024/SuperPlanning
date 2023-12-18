@@ -1,10 +1,7 @@
 package fr.wedidit.superplanning.superplanning.utils.gui;
 
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
-import fr.wedidit.superplanning.superplanning.identifiables.others.SessionType;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 
 public class SessionDailyGUI extends AbstractSessionGUI{
 
@@ -18,6 +15,7 @@ public class SessionDailyGUI extends AbstractSessionGUI{
         SessionDailyGUI sessionDailyGUI = new SessionDailyGUI(edtFrame, session);
         sessionDailyGUI.colorWidgets();
         sessionDailyGUI.moveWidgets();
+        sessionDailyGUI.buildLabels();
         sessionDailyGUI.draw();
         return sessionDailyGUI;
     }
