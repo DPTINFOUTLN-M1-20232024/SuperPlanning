@@ -1,6 +1,6 @@
 package fr.wedidit.superplanning.superplanning.controllers;
 
-import fr.wedidit.superplanning.superplanning.account.Account;
+import fr.wedidit.superplanning.superplanning.account.AccountStudent;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
@@ -13,7 +13,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -67,7 +66,7 @@ public class DailyViewController {
     }
 
     private void showDaySessions(Timestamp startDay, Timestamp endDay) {
-        Student student = Account.getStudentAccount();
+        Student student = AccountStudent.getStudentAccount();
         Set<Session> sessionsDay;
         try {
             sessionsDay = Session.getSessionsFromStudent(student, startDay, endDay);

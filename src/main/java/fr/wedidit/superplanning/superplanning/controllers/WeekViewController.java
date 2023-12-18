@@ -1,6 +1,6 @@
 package fr.wedidit.superplanning.superplanning.controllers;
 
-import fr.wedidit.superplanning.superplanning.account.Account;
+import fr.wedidit.superplanning.superplanning.account.AccountStudent;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
@@ -15,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -83,7 +82,7 @@ public class WeekViewController {
     }
 
     private void initStudentInfos() {
-        Student student = Account.getStudentAccount();
+        Student student = AccountStudent.getStudentAccount();
         firstNameUser.setText(student.getFirstname());
         nameUser.setText(student.getLastname());
         promotionUser.setText(student.getGrade().getName());
@@ -97,7 +96,7 @@ public class WeekViewController {
 
 
     private void showWeekSessions(Timestamp beginWeek, Timestamp endWeek) {
-        Student student = Account.getStudentAccount();
+        Student student = AccountStudent.getStudentAccount();
         Set<Session> sessionsWeek;
         try {
             sessionsWeek = Session.getSessionsFromStudent(student, beginWeek, endWeek);

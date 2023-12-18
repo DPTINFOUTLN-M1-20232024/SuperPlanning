@@ -4,24 +4,24 @@ import fr.wedidit.superplanning.superplanning.account.exceptions.AlreadyConnecte
 import fr.wedidit.superplanning.superplanning.account.exceptions.NoConnectedException;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
 
-public class Account {
+public class AccountStudent {
 
-    private Account() {}
+    private AccountStudent() {}
 
     private static Student studentAccount = null;
 
     public static boolean isConnected() {
-        return Account.studentAccount != null;
+        return AccountStudent.studentAccount != null;
     }
 
     public static void connect(Student studentAccount) throws AlreadyConnectedException {
         if (isConnected()) throw new AlreadyConnectedException();
-        Account.studentAccount = studentAccount;
+        AccountStudent.studentAccount = studentAccount;
     }
 
     public static void disconnect() throws NoConnectedException {
         if (!isConnected()) throw new NoConnectedException();
-        Account.studentAccount = null;
+        AccountStudent.studentAccount = null;
     }
 
     public static Student getStudentAccount() throws NoConnectedException {

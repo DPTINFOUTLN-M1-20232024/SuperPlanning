@@ -1,17 +1,17 @@
 package fr.wedidit.superplanning.superplanning.controllers;
 
-import fr.wedidit.superplanning.superplanning.account.Account;
+import fr.wedidit.superplanning.superplanning.account.AccountSecretary;
+import fr.wedidit.superplanning.superplanning.account.AccountStudent;
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.others.SecretaryConnectionDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.others.StudentConnectionDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
-import fr.wedidit.superplanning.superplanning.identifiables.others.StudentConnection;
+import fr.wedidit.superplanning.superplanning.identifiables.others.SessionConnection;
 import fr.wedidit.superplanning.superplanning.vues.Popup;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
 
 @Slf4j
 public class ConnectionController {
@@ -29,9 +29,9 @@ public class ConnectionController {
 
         // Loading the student from (mail, password)
         Student student;
-        StudentConnection studentConnection = StudentConnection.of(mail, password);
+        SessionConnection sessionConnection = SessionConnection.of(mail, password);
         try (StudentConnectionDAO studentConnectionDAO = new StudentConnectionDAO()) {
-            student = studentConnectionDAO.getStudentFromConnection(studentConnection);
+            student = studentConnectionDAO.getStudentFromConnection(sessionConnection);
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
             Popup.popup(POPUP_NAME, dataAccessException.getLocalizedMessage());
@@ -40,13 +40,25 @@ public class ConnectionController {
 
         // Check if mail and password is correct
         if (student == null) {
+
+            try (SecretaryConnectionDAO secretaryConnectionDAO = new SecretaryConnectionDAO()) {
+                if (secretaryConnectionDAO.getSecretaryFromConnection(sessionConnection)) {
+                    AccountSecretary.logging();
+                    SceneSwitcher.switchToScene(actionEvent, "SecretaryManagement.fxml");
+                    return;
+                }
+            } catch (DataAccessException dataAccessException) {
+                log.error(dataAccessException.getLocalizedMessage());
+                Popup.popup(POPUP_NAME, dataAccessException.getLocalizedMessage());
+            }
+
             String messageError = "Mail or password is not correct";
             log.error(messageError);
             Popup.popup(POPUP_NAME, messageError);
             return;
         }
 
-        Account.connect(student);
+        AccountStudent.connect(student);
         SceneSwitcher.switchToScene(actionEvent, "DailyView.fxml");
     }
 }

@@ -7,7 +7,7 @@ import fr.wedidit.superplanning.superplanning.database.datasources.DBCPDataSourc
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.database.exceptions.IdentifiableNotFoundException;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
-import fr.wedidit.superplanning.superplanning.identifiables.others.StudentConnection;
+import fr.wedidit.superplanning.superplanning.identifiables.others.SessionConnection;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
@@ -63,12 +63,12 @@ public class StudentConnectionDAO implements AutoCloseable {
 
     /**
      *
-     * @param studentConnection studentConnection
+     * @param sessionConnection sessionConnection
      * @param student student without id
      * @return student with id
      * @throws DataAccessException if error
      */
-    public Student persist(StudentConnection studentConnection, Student student) throws DataAccessException {
+    public Student persist(SessionConnection sessionConnection, Student student) throws DataAccessException {
 
         Student studentWithID;
         try (StudentDAO studentDAO = new StudentDAO()){
@@ -80,8 +80,8 @@ public class StudentConnectionDAO implements AutoCloseable {
 
         try {
             psPersist.setLong(1, studentWithID.getId());
-            psPersist.setString(2, studentConnection.getMail());
-            psPersist.setString(3, studentConnection.getHashPassword());
+            psPersist.setString(2, sessionConnection.getMail());
+            psPersist.setString(3, sessionConnection.getHashPassword());
             psPersist.executeUpdate();
         } catch (SQLException sqlException) {
             throw new DataAccessException(StudentConnectionDAO.class,
@@ -92,11 +92,11 @@ public class StudentConnectionDAO implements AutoCloseable {
         return studentWithID;
     }
 
-    public Student getStudentFromConnection(StudentConnection studentConnection) throws DataAccessException {
+    public Student getStudentFromConnection(SessionConnection sessionConnection) throws DataAccessException {
         long idStudent;
         try {
-            psFindStudent.setString(1, studentConnection.getMail());
-            psFindStudent.setString(2, studentConnection.getHashPassword());
+            psFindStudent.setString(1, sessionConnection.getMail());
+            psFindStudent.setString(2, sessionConnection.getHashPassword());
 
             ResultSet rs = psFindStudent.executeQuery();
             if (rs.next()) {
