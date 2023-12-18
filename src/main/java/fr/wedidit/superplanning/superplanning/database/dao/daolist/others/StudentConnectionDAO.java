@@ -14,7 +14,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 
 @Slf4j
 public class StudentConnectionDAO implements AutoCloseable {
@@ -64,10 +63,10 @@ public class StudentConnectionDAO implements AutoCloseable {
 
     /**
      *
-     * @param studentConnection
+     * @param studentConnection studentConnection
      * @param student student without id
      * @return student with id
-     * @throws DataAccessException
+     * @throws DataAccessException if error
      */
     public Student persist(StudentConnection studentConnection, Student student) throws DataAccessException {
 

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
@@ -34,6 +35,18 @@ public class TimeUtils {
         Timestamp endTimestamp = Timestamp.valueOf(endOfWeek);
 
         return new Timestamp[] {startTimestamp, endTimestamp};
+    }
+
+    public static Timestamp[] getCurrentDayDelimitation() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        LocalDateTime startDay = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.of(0, 0, 1));
+        LocalDateTime endDay = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.of(23, 59, 59));
+
+        Timestamp startDayTimestamp = Timestamp.valueOf(startDay);
+        Timestamp endDayTimestamp = Timestamp.valueOf(endDay);
+
+        return new Timestamp[] {startDayTimestamp, endDayTimestamp};
     }
 
     public static String getDateInfo(Timestamp timestamp, String format) {

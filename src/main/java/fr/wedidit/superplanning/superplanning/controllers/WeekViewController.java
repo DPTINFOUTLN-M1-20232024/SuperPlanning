@@ -58,7 +58,7 @@ public class WeekViewController {
             Timestamp[] currentWeekDelimitation = TimeUtils.getCurrentWeekDelimitation(pageIndex);
             initDaysLabels(currentWeekDelimitation[0]);
             showWeekSessions(currentWeekDelimitation[0], currentWeekDelimitation[1]);
-            return new Label("Content for page " + pageIndex);
+            return new Label("i");
         });
 
         int weekNumber = TimeUtils.getPaginationIndexFromCurrentDate();
@@ -91,18 +91,19 @@ public class WeekViewController {
 
     /* Methods */
     @FXML
-    private void switchToDailyView(ActionEvent event) throws IOException {
+    private void switchToDailyView(ActionEvent event) {
         SceneSwitcher.switchToScene(event, "DailyView.fxml");
     }
 
 
     private void showWeekSessions(Timestamp beginWeek, Timestamp endWeek) {
         Student student = Account.getStudentAccount();
-        Set<Session> sessionsWeek = null;
+        Set<Session> sessionsWeek;
         try {
             sessionsWeek = Session.getSessionsFromStudent(student, beginWeek, endWeek);
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
+            return;
         }
         sessionsWeek.forEach(session -> sessionGUISet.add(SessionWeekGUI.of(edtFrame, session)));
     }

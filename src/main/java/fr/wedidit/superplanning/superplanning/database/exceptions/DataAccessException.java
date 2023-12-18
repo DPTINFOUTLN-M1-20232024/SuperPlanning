@@ -15,7 +15,6 @@ public class DataAccessException extends Exception {
      * @param sqlException SQL error
      * @param identifiable Object related to DAO
      * @param reason Cause of error
-     * @param <S> DAO class concerned
      */
     public DataAccessException(Class<?> daoClass, SQLException sqlException, Identifiable identifiable, String reason) {
         super("[%s] %s (%s):%n%s".formatted(daoClass.getName(), reason, identifiable.toString(), sqlException.getLocalizedMessage()));
@@ -25,7 +24,6 @@ public class DataAccessException extends Exception {
      * @param daoClass DAO class affected by the error
      * @param sqlException SQL error
      * @param reason Cause of error
-     * @param <S> DAO class concerned
      */
     public DataAccessException(Class<?> daoClass, SQLException sqlException, String reason) {
         super("[%s] %s:%n%s".formatted(daoClass.getName(), reason, sqlException.getLocalizedMessage()));

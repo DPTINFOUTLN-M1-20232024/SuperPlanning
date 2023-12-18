@@ -204,7 +204,7 @@ public class SessionDAO extends AbstractDAO<Session> {
         ID_MODULE,
         ID_INSTRUCTOR,
         ID_ROOM,
-        SESSION_TYPE;
+        SESSION_TYPE
     }
 
 }

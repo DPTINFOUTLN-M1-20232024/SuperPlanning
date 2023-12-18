@@ -5,11 +5,10 @@ import javafx.scene.layout.AnchorPane;
 
 public class SessionDailyGUI extends AbstractSessionGUI{
 
-    //todo : Changer valeurs pour correspondre à l'IHM Journalier
-    private static final int XINITPOS = -1;
-    private static final int YINITPOS = -1;
-    private static final int XSHIFT = -1;
-    private static final int YSIZE = -1;
+    private static final int XINITPOS = 404;
+    private static final int YINITPOS = 96;
+    private static final int XSHIFT = 404;
+    private static final int YSIZE = 464;
 
     public static SessionDailyGUI of(AnchorPane edtFrame, Session session) {
         SessionDailyGUI sessionDailyGUI = new SessionDailyGUI(edtFrame, session);

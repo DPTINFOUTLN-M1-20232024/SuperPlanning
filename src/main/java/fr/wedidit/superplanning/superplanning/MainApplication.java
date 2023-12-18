@@ -24,11 +24,12 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) {
-        Parent root = null;
+        Parent root;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("Connection.fxml")));
         } catch (IOException ioException) {
             log.error(ioException.getLocalizedMessage());
+            return;
         }
         stage.setScene(new Scene(root));
         loadProperties();

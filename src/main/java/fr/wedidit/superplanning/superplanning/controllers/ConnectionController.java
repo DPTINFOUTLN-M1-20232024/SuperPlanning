@@ -8,8 +8,6 @@ import fr.wedidit.superplanning.superplanning.identifiables.others.StudentConnec
 import fr.wedidit.superplanning.superplanning.vues.Popup;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,16 +46,7 @@ public class ConnectionController {
             return;
         }
 
-        // Swap to the next view
         Account.connect(student);
-        String fxmlFileName = "DailyView.fxml";
-        try {
-            SceneSwitcher.switchToScene(actionEvent, fxmlFileName);
-        } catch (IOException e) {
-            Account.disconnect();
-            String messageError = "Error while looking for file \"%s\": %s%nYou have been disconnected".formatted(fxmlFileName, e.getLocalizedMessage());
-            log.error(messageError);
-            Popup.popup(POPUP_NAME, messageError);
-        }
+        SceneSwitcher.switchToScene(actionEvent, "DailyView.fxml");
     }
 }
