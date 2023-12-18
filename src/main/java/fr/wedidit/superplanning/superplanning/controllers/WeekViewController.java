@@ -12,14 +12,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -59,13 +56,8 @@ public class WeekViewController {
         weekPagination.setPageFactory(pageIndex -> {
             sessionGUISet.forEach(AbstractSessionGUI::clear);
             Timestamp[] currentWeekDelimitation = TimeUtils.getCurrentWeekDelimitation(pageIndex);
-
             initDaysLabels(currentWeekDelimitation[0]);
-            try {
-                showWeekSessions(currentWeekDelimitation[0], currentWeekDelimitation[1]);
-            } catch (ParseException parseException) {
-                log.error(parseException.getLocalizedMessage());
-            }
+            showWeekSessions(currentWeekDelimitation[0], currentWeekDelimitation[1]);
             return new Label("Content for page " + pageIndex);
         });
 
@@ -104,7 +96,7 @@ public class WeekViewController {
     }
 
 
-    private void showWeekSessions(Timestamp beginWeek, Timestamp endWeek) throws ParseException {
+    private void showWeekSessions(Timestamp beginWeek, Timestamp endWeek) {
         Student student = Account.getStudentAccount();
         Set<Session> sessionsWeek = null;
         try {
