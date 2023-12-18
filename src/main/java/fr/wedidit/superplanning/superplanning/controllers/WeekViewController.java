@@ -4,6 +4,7 @@ import fr.wedidit.superplanning.superplanning.account.Account;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
+import fr.wedidit.superplanning.superplanning.utils.gui.AbstractSessionGUI;
 import fr.wedidit.superplanning.superplanning.utils.gui.SessionWeekGUI;
 import fr.wedidit.superplanning.superplanning.utils.others.TimeUtils;
 import javafx.event.ActionEvent;
@@ -55,8 +56,8 @@ public class WeekViewController {
 
     @FXML
     private void initialize() {
-        weekPagination.setPageFactory((pageIndex) -> {
-            sessionGUISet.forEach(sessionWeekGUI -> sessionWeekGUI.clear());
+        weekPagination.setPageFactory(pageIndex -> {
+            sessionGUISet.forEach(AbstractSessionGUI::clear);
             Timestamp[] currentWeekDelimitation = TimeUtils.getCurrentWeekDelimitation(pageIndex);
 
             initDaysLabels(currentWeekDelimitation[0]);
@@ -65,12 +66,10 @@ public class WeekViewController {
             } catch (ParseException parseException) {
                 log.error(parseException.getLocalizedMessage());
             }
-            log.info(String.valueOf(pageIndex));
             return new Label("Content for page " + pageIndex);
         });
 
         int weekNumber = TimeUtils.getPaginationIndexFromCurrentDate();
-        log.info("weekNumber: %d".formatted(weekNumber));
         weekPagination.setPageCount(52);
         weekPagination.setCurrentPageIndex((weekNumber - 33) % 53);
 

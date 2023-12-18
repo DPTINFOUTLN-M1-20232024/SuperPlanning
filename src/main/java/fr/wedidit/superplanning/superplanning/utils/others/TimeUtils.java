@@ -46,7 +46,6 @@ public class TimeUtils {
 
         int year = CURRENT_YEAR;
         int weekNumber = currentPageIndex + 34;
-        currentPageIndex += 34;
         if (weekNumber >= 53) {
             weekNumber -= 52;
             year++;
