@@ -46,6 +46,8 @@ public class ConnectionController {
                     AccountSecretary.logging();
                     SceneSwitcher.switchToScene(actionEvent, "SecretaryManagement.fxml");
                     return;
+                } else {
+                    log.info("pas trouvée");
                 }
             } catch (DataAccessException dataAccessException) {
                 log.error(dataAccessException.getLocalizedMessage());

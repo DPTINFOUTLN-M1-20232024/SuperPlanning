@@ -25,10 +25,10 @@ public class SecretaryConnectionDAO implements AutoCloseable {
                 FROM %s
                 WHERE %s.MAIL = ?
                 AND %s.HASH_PASSWORD = ?;
-                """.formatted(TableType.STUDENT_CONNECTION.name(),
-                TableType.STUDENT_CONNECTION.name(),
-                TableType.STUDENT_CONNECTION.name(),
-                TableType.STUDENT_CONNECTION.name());
+                """.formatted(TableType.SECRETARY_CONNECTION.name(),
+                TableType.SECRETARY_CONNECTION.name(),
+                TableType.SECRETARY_CONNECTION.name(),
+                TableType.SECRETARY_CONNECTION.name());
 
         try {
             this.connection = DBCPDataSource.getConnection();

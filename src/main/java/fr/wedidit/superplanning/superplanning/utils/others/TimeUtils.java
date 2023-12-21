@@ -16,6 +16,17 @@ public class TimeUtils {
 
     private TimeUtils() {}
 
+    public static int[] parseHoursMinutes(String text) throws NumberFormatException {
+        if (text.length() != 5) throw new NumberFormatException();
+
+        String[] textSplited;
+        if (text.contains(":")) textSplited = text.split(":");
+        else if (text.contains("h")) textSplited = text.split("h");
+        else throw new NumberFormatException();
+
+        return new int[] {Integer.parseInt(textSplited[0]), Integer.parseInt(textSplited[1])};
+    }
+
     public static Timestamp[] getCurrentWeekDelimitation(int currentPageIndex) {
         LocalDateTime now = currentPageIndexToLocalDateTime(currentPageIndex);
 

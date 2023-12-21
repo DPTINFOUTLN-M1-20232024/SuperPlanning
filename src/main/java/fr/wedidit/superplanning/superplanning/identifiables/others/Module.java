@@ -24,4 +24,8 @@ public class Module implements Identifiable {
         return new Module(id, name, grade);
     }
 
+    public static Module of(String name, Grade grade) {
+        return new Module(-1, name, grade);
+    }
+
 }

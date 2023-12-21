@@ -48,6 +48,10 @@ public class Session implements Identifiable {
         return new Session(id, begin, finish, module, instructor, room, sessionType);
     }
 
+    public static Session of(Timestamp begin, Timestamp finish, Module module, Instructor instructor, Room room, SessionType sessionType) {
+        return new Session(-1, begin, finish, module, instructor, room, sessionType);
+    }
+
     /**
      * Return the set of session from student and a range.
      *
@@ -83,5 +87,4 @@ public class Session implements Identifiable {
         return sessions;
     }
 
-
-    }
+}

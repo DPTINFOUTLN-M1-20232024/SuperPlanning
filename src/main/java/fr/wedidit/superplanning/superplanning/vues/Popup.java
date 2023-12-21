@@ -32,4 +32,8 @@ public class Popup {
         popupWindow.setScene(scene);
         popupWindow.showAndWait();
     }
+
+    public static void error(String message) {
+        popup("Error", message);
+    }
 }

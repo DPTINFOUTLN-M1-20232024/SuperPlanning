@@ -24,5 +24,9 @@ public class Instructor implements Identifiable {
         return new Instructor(id, firstname, lastname);
     }
 
+    public static Instructor of(String firstname, String lastname) {
+        return new Instructor(-1, firstname, lastname);
+    }
+
 
 }
