@@ -26,7 +26,7 @@ public class SessionWeekGUI extends AbstractSessionGUI {
     }
 
     private SessionWeekGUI(AnchorPane edtFrame, Session session) {
-        super(edtFrame, session, XINITPOS, YINITPOS, XSHIFT, YSIZE);
+        super(edtFrame, session, XINITPOS, YINITPOS, XSHIFT, YSIZE, true);
     }
 
 }

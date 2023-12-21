@@ -20,6 +20,6 @@ public class SessionDailyGUI extends AbstractSessionGUI{
     }
 
     private SessionDailyGUI(AnchorPane edtFrame, Session session) {
-        super(edtFrame, session, XINITPOS, YINITPOS, XSHIFT, YSIZE);
+        super(edtFrame, session, XINITPOS, YINITPOS, XSHIFT, YSIZE, false);
     }
 }

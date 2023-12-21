@@ -40,7 +40,7 @@ public class AbstractSessionGUI {
     private Rectangle sessionRectangle;
     private final String sessionInfos;
 
-    protected AbstractSessionGUI(AnchorPane edtFrame, Session session, int startX, int startY, int shiftX, int totalY) {
+    protected AbstractSessionGUI(AnchorPane edtFrame, Session session, int startX, int startY, int shiftX, int totalY, boolean multipleCols) {
         this.session = session;
         this.edtFrame = edtFrame;
         LocalDateTime localDateTime = session.getBegin().toLocalDateTime();
@@ -53,7 +53,7 @@ public class AbstractSessionGUI {
         div *= totalY;
         div += startY;
         this.drawingRectangleCoords = Point.of(
-                startX + shiftX * this.dayOfWeekNumber,
+                startX + (multipleCols ? shiftX : 0) * this.dayOfWeekNumber,
                 (int) div
         );
         num = session.getFinish().getTime() - session.getBegin().getTime();

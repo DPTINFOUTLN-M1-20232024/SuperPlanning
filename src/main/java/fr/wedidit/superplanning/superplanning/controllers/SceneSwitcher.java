@@ -28,9 +28,8 @@ class SceneSwitcher {
      */
     static void switchToScene(Scene scene, String fileName) {
         Stage stage = (Stage) scene.getWindow();
-
-        Parent root;
         stage.setResizable(true);
+        Parent root;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(SceneSwitcher.class.getClassLoader().getResource(fileName)));
         } catch (IOException e) {
@@ -39,10 +38,11 @@ class SceneSwitcher {
             Popup.popup("Error while loading fxml file", messageError);
             return;
         }
-        stage.setResizable(false);
         scene = new Scene(root);
 
         stage.setScene(scene);
+
+        stage.setResizable(false);
         stage.show();
 
     }
