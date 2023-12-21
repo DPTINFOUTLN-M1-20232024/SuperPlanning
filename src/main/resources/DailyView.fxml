@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="edtFrame" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #23272a;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.wedidit.superplanning.superplanning.controllers.DailyViewController">
+<AnchorPane fx:id="edtFrame" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #23272a;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.wedidit.superplanning.superplanning.controllers.DailyViewController">
     <children>
         <BorderPane prefHeight="600.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <right>
