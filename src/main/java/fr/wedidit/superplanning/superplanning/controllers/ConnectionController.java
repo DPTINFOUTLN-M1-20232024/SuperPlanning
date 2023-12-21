@@ -7,7 +7,7 @@ import fr.wedidit.superplanning.superplanning.database.dao.daolist.others.Studen
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
 import fr.wedidit.superplanning.superplanning.identifiables.others.SessionConnection;
-import fr.wedidit.superplanning.superplanning.vues.Popup;
+import fr.wedidit.superplanning.superplanning.utils.vues.Popup;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

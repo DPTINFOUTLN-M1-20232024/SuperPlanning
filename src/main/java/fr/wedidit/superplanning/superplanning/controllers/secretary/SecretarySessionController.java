@@ -6,20 +6,17 @@ import fr.wedidit.superplanning.superplanning.identifiables.humans.Instructor;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Grade;
 import fr.wedidit.superplanning.superplanning.identifiables.others.SessionType;
 import fr.wedidit.superplanning.superplanning.utils.others.TimeUtils;
-import fr.wedidit.superplanning.superplanning.vues.AutoCompleteBox;
-import fr.wedidit.superplanning.superplanning.vues.Popup;
+import fr.wedidit.superplanning.superplanning.utils.vues.AutoCompleteBox;
+import fr.wedidit.superplanning.superplanning.utils.vues.Popup;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j

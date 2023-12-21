@@ -2,7 +2,7 @@ package fr.wedidit.superplanning.superplanning.utils.gui;
 
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
 import fr.wedidit.superplanning.superplanning.utils.maths.Point;
-import fr.wedidit.superplanning.superplanning.vues.Popup;
+import fr.wedidit.superplanning.superplanning.utils.vues.Popup;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;

@@ -1,6 +1,6 @@
 package fr.wedidit.superplanning.superplanning.controllers;
 
-import fr.wedidit.superplanning.superplanning.vues.Popup;
+import fr.wedidit.superplanning.superplanning.utils.vues.Popup;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -30,6 +30,7 @@ class SceneSwitcher {
         Stage stage = (Stage) scene.getWindow();
 
         Parent root;
+        stage.setResizable(true);
         try {
             root = FXMLLoader.load(Objects.requireNonNull(SceneSwitcher.class.getClassLoader().getResource(fileName)));
         } catch (IOException e) {
@@ -38,6 +39,7 @@ class SceneSwitcher {
             Popup.popup("Error while loading fxml file", messageError);
             return;
         }
+        stage.setResizable(false);
         scene = new Scene(root);
 
         stage.setScene(scene);
