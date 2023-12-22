@@ -38,8 +38,8 @@ public class TestAreaAdam {
         testTernaryDDB();
         testConnection();
 
-        SessionConnection sessionConnection = SessionConnection.of("adam", "lol");
-        log.info(sessionConnection.getHashPassword());
+        StudentConnection studentConnection = StudentConnection.of("adam", "lol");
+        log.info(studentConnection.getHashPassword());
     }
 
     public static void loadProperties() {
@@ -112,15 +112,18 @@ public class TestAreaAdam {
         SessionConnection sessionConnection = SessionConnection.of("alexandre.lerousseau@gmail.com", "azerty");
         try (StudentConnectionDAO studentConnectionDAO = new StudentConnectionDAO()) {
             alexandre = studentConnectionDAO.persist(sessionConnection, alexandre);
+
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
         }
 
         // Récupération de l'étudiant par couple mail/mot de passe
         Student alexandre1;
-        SessionConnection sessionConnection2 = SessionConnection.of("alexandre.lerousseau@gmail.com", "azerty");
+        alexandre1 = studentConnectionDAO.getStudentFromConnection(sessionConnection2);
+
+        StudentConnection studentConnection2 = StudentConnection.of("alexandre.lerousseau@gmail.com", "azerty");
         try (StudentConnectionDAO studentConnectionDAO = new StudentConnectionDAO()) {
-            alexandre1 = studentConnectionDAO.getStudentFromConnection(sessionConnection2);
+            alexandre1 = studentConnectionDAO.getStudentFromConnection(studentConnection2);
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
             return;

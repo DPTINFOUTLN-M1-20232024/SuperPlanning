@@ -75,6 +75,7 @@ public class DailyViewController {
             return;
         }
         sessionsDay.forEach(session -> sessionGUISet.add(SessionDailyGUI.of(edtFrame, session)));
+
     }
 
 }
