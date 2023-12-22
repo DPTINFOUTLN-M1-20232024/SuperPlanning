@@ -2,7 +2,7 @@ package fr.wedidit.superplanning.superplanning.controllers.secretary;
 
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.others.ModuleDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
-import fr.wedidit.superplanning.superplanning.utils.vues.Popup;
+import fr.wedidit.superplanning.superplanning.utils.views.Popup;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

@@ -1,6 +1,6 @@
 package fr.wedidit.superplanning.superplanning.controllers;
 
-import fr.wedidit.superplanning.superplanning.utils.vues.Popup;
+import fr.wedidit.superplanning.superplanning.utils.views.Popup;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

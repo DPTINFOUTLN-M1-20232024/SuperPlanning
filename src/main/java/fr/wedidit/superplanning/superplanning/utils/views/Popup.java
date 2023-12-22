@@ -1,4 +1,4 @@
-package fr.wedidit.superplanning.superplanning.utils.vues;
+package fr.wedidit.superplanning.superplanning.utils.views;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

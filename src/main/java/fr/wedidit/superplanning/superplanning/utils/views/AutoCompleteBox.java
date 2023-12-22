@@ -1,4 +1,4 @@
-package fr.wedidit.superplanning.superplanning.utils.vues;
+package fr.wedidit.superplanning.superplanning.utils.views;
 
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
