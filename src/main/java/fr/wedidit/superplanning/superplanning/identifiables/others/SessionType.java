@@ -11,7 +11,6 @@ public enum SessionType {
     CT("#E21A1A");
 
     private final String colorHexa;
-    private Paint colorPaint;
 
     private SessionType(String colorHexa) {
         this.colorHexa = colorHexa;
