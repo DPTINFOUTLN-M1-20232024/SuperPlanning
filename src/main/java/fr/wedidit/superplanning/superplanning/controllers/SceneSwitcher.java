@@ -42,7 +42,6 @@ class SceneSwitcher {
 
         stage.setScene(scene);
 
-        stage.setResizable(false);
         stage.show();
 
     }
