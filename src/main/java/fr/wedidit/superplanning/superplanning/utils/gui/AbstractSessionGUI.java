@@ -64,10 +64,11 @@ public class AbstractSessionGUI {
                 shiftX,
                 (int) div
         );
-        this.sessionInfos = "Module: %s%nProfesseur: %s%nSalle: %s".formatted(
+        this.sessionInfos = "Module: %s%nProfesseur: %s%nSalle: %s%n%s".formatted(
                 session.getModule().getName(),
                 session.getInstructor().getLastname(),
-                session.getRoom().getName()
+                session.getRoom().getName(),
+                session.getSessionType()
         );
         this.labelInfo = new Label(sessionInfos);
         this.sessionRectangle = new Rectangle();
