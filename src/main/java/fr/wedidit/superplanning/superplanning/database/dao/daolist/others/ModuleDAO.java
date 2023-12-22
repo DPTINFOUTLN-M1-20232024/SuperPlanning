@@ -61,9 +61,12 @@ public class ModuleDAO extends AbstractDAO<Module> {
     @Override
     protected Module instantiateEntity(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong("ID");
-        String nom = resultSet.getString("NAME");
-
+        String name = resultSet.getString("NAME");
         long idGrade = resultSet.getLong("ID_GRADE");
+        return fromVariables(id, name, idGrade);
+    }
+
+    public Module fromVariables(long id, String name, long idGrade) {
         Grade grade;
         try (GradeDAO gradeDAO = new GradeDAO()) {
             grade = gradeDAO.find(idGrade).orElseThrow(() -> new IdentifiableNotFoundException(idGrade));
@@ -72,7 +75,11 @@ public class ModuleDAO extends AbstractDAO<Module> {
             return null;
         }
 
-        return Module.of(id, nom, grade);
+        return Module.of(id, name, grade);
+    }
+
+    public Module fromVariables(String name, long idGrade) {
+        return fromVariables(-1, name, idGrade);
     }
 
     @Override

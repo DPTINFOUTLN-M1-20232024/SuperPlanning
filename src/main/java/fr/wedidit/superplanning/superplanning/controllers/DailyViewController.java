@@ -1,50 +1,80 @@
 package fr.wedidit.superplanning.superplanning.controllers;
 
+import fr.wedidit.superplanning.superplanning.account.AccountStudent;
+import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
+import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
+import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
+import fr.wedidit.superplanning.superplanning.utils.gui.AbstractSessionGUI;
+import fr.wedidit.superplanning.superplanning.utils.gui.SessionDailyGUI;
+import fr.wedidit.superplanning.superplanning.utils.others.TimeUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.AnchorPane;
+import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
+@Slf4j
 public class DailyViewController {
+
+    private final Set<SessionDailyGUI> sessionGUISet = new HashSet<>();
+    @FXML
+    private AnchorPane edtFrame;
     @FXML
     private DatePicker datePicker;
-    @FXML
-    private Button nextDayButton;
-    @FXML
-    private Button prevDayButton;
+
     public void initialize() {
-// initialise la date actuelle
         datePicker.setValue(LocalDate.now());
 
+        Timestamp[] currentDayDelimitation = TimeUtils.getCurrentDayDelimitation();
+        showDaySessions(currentDayDelimitation[0], currentDayDelimitation[1]);
     }
     @FXML
     private void nextDay(ActionEvent event) {
-//recupere la date actuelle
         LocalDate currentDate = datePicker.getValue();
-//+un jour
         datePicker.setValue(currentDate.plusDays(1));
+        loadSessions();
     }
+
+    private void loadSessions() {
+        LocalDate selectedDate = datePicker.getValue();
+        LocalDateTime localDateTime = LocalDateTime.of(selectedDate, LocalTime.MIDNIGHT);
+        LocalDateTime startDay = LocalDateTime.of(localDateTime.toLocalDate(), LocalTime.of(0, 0, 1));
+        LocalDateTime endDay = LocalDateTime.of(localDateTime.toLocalDate(), LocalTime.of(23, 59, 59));
+        Timestamp startDayTimestamp = Timestamp.valueOf(startDay);
+        Timestamp endDayTimestamp = Timestamp.valueOf(endDay);
+        sessionGUISet.forEach(AbstractSessionGUI::clear);
+        showDaySessions(startDayTimestamp, endDayTimestamp);
+    }
+
     @FXML
     private void prevDay(ActionEvent event) {
-
         LocalDate currentDate = datePicker.getValue();
-
         datePicker.setValue(currentDate.minusDays(1));
-
-
-
+        loadSessions();
     }
 
     @FXML
-    private void switchToWeekView(ActionEvent event) throws IOException {
+    private void switchToWeekView(ActionEvent event) {
         SceneSwitcher.switchToScene(event, "WeekView.fxml");
     }
-    @FXML
-    private void switchToDailyView(ActionEvent event) throws IOException {
-        SceneSwitcher.switchToScene(event, "DailyView.fxml");
+
+    private void showDaySessions(Timestamp startDay, Timestamp endDay) {
+        Student student = AccountStudent.getStudentAccount();
+        Set<Session> sessionsDay;
+        try {
+            sessionsDay = Session.getSessionsFromStudent(student, startDay, endDay);
+        } catch (DataAccessException dataAccessException) {
+            log.error(dataAccessException.getLocalizedMessage());
+            return;
+        }
+        sessionsDay.forEach(session -> sessionGUISet.add(SessionDailyGUI.of(edtFrame, session)));
     }
 
 }

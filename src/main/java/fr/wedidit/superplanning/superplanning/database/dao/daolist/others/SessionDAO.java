@@ -114,14 +114,8 @@ public class SessionDAO extends AbstractDAO<Session> {
         }
     }
 
-    @Override
-    protected Session instantiateEntity(ResultSet resultSet) throws SQLException {
-        long id = resultSet.getLong("ID");
-        Timestamp start = resultSet.getTimestamp(SessionColumns.BEGIN.name());
-        Timestamp end = resultSet.getTimestamp(SessionColumns.FINISH.name());
-
+    public Session fromVariables(long id, Timestamp start, Timestamp end, long idModule, long idInstructor, long idRoom, SessionType sessionType) {
         Module module;
-        long idModule = resultSet.getLong(SessionColumns.ID_MODULE.name());
         try (ModuleDAO moduleDAO = new ModuleDAO()) {
             module = moduleDAO.find(idModule).orElseThrow(() -> new IdentifiableNotFoundException(idModule));
         } catch (DataAccessException dataAccessException) {
@@ -130,7 +124,6 @@ public class SessionDAO extends AbstractDAO<Session> {
         }
 
         Instructor instructor;
-        long idInstructor = resultSet.getLong(SessionColumns.ID_INSTRUCTOR.name());
         try (InstructorDAO instructorDAO = new InstructorDAO()) {
             instructor = instructorDAO.find(idInstructor).orElseThrow(() -> new IdentifiableNotFoundException(idInstructor));
         } catch (DataAccessException dataAccessException) {
@@ -139,17 +132,12 @@ public class SessionDAO extends AbstractDAO<Session> {
         }
 
         Room room;
-        long idRoom = resultSet.getLong(SessionColumns.ID_ROOM.name());
         try (RoomDAO roomDAO = new RoomDAO()) {
             room = roomDAO.find(idRoom).orElseThrow(() -> new IdentifiableNotFoundException(idRoom));
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
             return null;
         }
-
-        String sessionTypeString = resultSet.getString(SessionColumns.SESSION_TYPE.name());
-        SessionType sessionType = SessionType.valueOf(sessionTypeString);
-
 
         return Session.of(id,
                 start,
@@ -158,7 +146,23 @@ public class SessionDAO extends AbstractDAO<Session> {
                 instructor,
                 room,
                 sessionType);
+    }
 
+    public Session fromVariables(Timestamp start, Timestamp end, long idModule, long idInstructor, long idRoom, SessionType sessionType) {
+        return fromVariables(-1, start, end, idModule, idInstructor, idRoom, sessionType);
+    }
+
+    @Override
+    protected Session instantiateEntity(ResultSet resultSet) throws SQLException {
+        long id = resultSet.getLong("ID");
+        Timestamp start = resultSet.getTimestamp(SessionColumns.BEGIN.name());
+        Timestamp end = resultSet.getTimestamp(SessionColumns.FINISH.name());
+        long idModule = resultSet.getLong(SessionColumns.ID_MODULE.name());
+        long idInstructor = resultSet.getLong(SessionColumns.ID_INSTRUCTOR.name());
+        long idRoom = resultSet.getLong(SessionColumns.ID_ROOM.name());
+        String sessionTypeString = resultSet.getString(SessionColumns.SESSION_TYPE.name());
+        SessionType sessionType = SessionType.valueOf(sessionTypeString);
+        return fromVariables(id, start, end, idModule, idInstructor, idRoom, sessionType);
     }
 
     @Override
@@ -204,7 +208,7 @@ public class SessionDAO extends AbstractDAO<Session> {
         ID_MODULE,
         ID_INSTRUCTOR,
         ID_ROOM,
-        SESSION_TYPE;
+        SESSION_TYPE
     }
 
 }

@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -24,15 +25,19 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) {
-        try{
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("Connection.fxml")));
-            stage.setScene(new Scene(root));
-            loadProperties();
-            stage.show();
-        }catch(Exception e){
-            e.printStackTrace();
+        Parent root;
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("Connection.fxml")));
+        } catch (IOException ioException) {
+            log.error(ioException.getLocalizedMessage());
+            return;
         }
+        stage.setScene(new Scene(root));
+        loadProperties();
+        stage.setResizable(false);
+        stage.show();
     }
+
     public static void main(String[] args) {
         launch(args);
     }
