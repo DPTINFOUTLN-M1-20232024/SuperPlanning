@@ -9,7 +9,10 @@ import fr.wedidit.superplanning.superplanning.utils.gui.SessionDailyGUI;
 import fr.wedidit.superplanning.superplanning.utils.others.TimeUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +27,12 @@ import java.util.Set;
 public class DailyViewController {
 
     private final Set<SessionDailyGUI> sessionGUISet = new HashSet<>();
+    @FXML
+    private Label nameUser;
+    @FXML
+    private Label firstNameUser;
+    @FXML
+    private Label promotionUser;
     @FXML
     private AnchorPane edtFrame;
     @FXML
@@ -63,6 +72,19 @@ public class DailyViewController {
     @FXML
     private void switchToWeekView(ActionEvent event) {
         SceneSwitcher.switchToScene(event, "WeekView.fxml");
+    }
+
+    @FXML
+    private void onMouseEntered(MouseEvent event) {
+        Button button = (Button) event.getSource();
+        button.setStyle("-fx-background-color: #7289DA");
+    }
+
+    @FXML
+    private void onMouseExited(MouseEvent event) {
+        Button button = (Button) event.getSource();
+        button.setStyle("-fx-background-color: #4E4F55");
+        //button.setStyle("-fx-text-fill: #FFFFFF;");
     }
 
     private void showDaySessions(Timestamp startDay, Timestamp endDay) {
