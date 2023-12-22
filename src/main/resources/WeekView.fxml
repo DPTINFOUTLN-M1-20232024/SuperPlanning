@@ -14,17 +14,12 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="edtFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #23272a;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.wedidit.superplanning.superplanning.controllers.WeekViewController">
+<AnchorPane fx:id="edtFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #23272a;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.wedidit.superplanning.superplanning.controllers.WeekViewController">
    <children>
       <BorderPane layoutX="434.0" layoutY="29.0" prefHeight="88.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="118.0" layoutY="33.0" mnemonicParsing="false" onAction="#switchToDailyView" style="-fx-background-color: #18b103;" text="Accueil" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Button>
                   <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="-47.0" layoutY="-26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
                      <image>
                         <Image url="@image/Superplanning.png" />
@@ -35,17 +30,23 @@
                         <Font name="Likhan" size="20.0" />
                      </font>
                   </Label>
+                  <Button layoutX="129.0" layoutY="38.0" mnemonicParsing="false" onAction="#switchToDailyView" style="-fx-background-color: #18b103;" text="Accueil" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </left>
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label layoutX="198.0" layoutY="30.0" text="Emploi du temps hebdomadaire" textAlignment="CENTER" textFill="WHITE">
+                  <Label layoutX="200.0" layoutY="14.0" text="Emploi du temps hebdomadaire" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
+                  <Pagination fx:id="weekPagination" layoutX="25.0" layoutY="43.0" maxPageIndicatorCount="30" pageCount="52" prefHeight="21.0" prefWidth="776.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="43.0" />
                </children></AnchorPane>
          </center>
          <right>
@@ -76,7 +77,6 @@
       </BorderPane>
       <AnchorPane layoutX="32.0" layoutY="129.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <Pagination fx:id="weekPagination" layoutX="38.0" layoutY="9.0" maxPageIndicatorCount="30" pageCount="52" prefHeight="46.0" prefWidth="1600.0" translateY="-60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <GridPane gridLinesVisible="true" layoutX="33.0" layoutY="61.0" style="-fx-border-color: #7289da; -fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.3333129882812" minWidth="10.0" prefWidth="30.0" />
