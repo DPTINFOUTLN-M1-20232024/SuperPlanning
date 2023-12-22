@@ -26,13 +26,21 @@ import java.util.List;
 
 @Slf4j
 public class SecretarySessionController {
-    public TextField textFieldStartTime;
+    @FXML
+    private TextField textFieldStartTime;
+    @FXML
     public TextField textFieldEndTime;
+    @FXML
     public DatePicker datePickerStartDate;
+    @FXML
     public DatePicker datePickerEndDate;
+    @FXML
     public ComboBox<Instructor> comboBoxInstructor;
+    @FXML
     public ComboBox<Module> comboBoxModule;
+    @FXML
     public ComboBox<Grade> comboBoxGrade;
+    @FXML
     public ComboBox<SessionType> comboBoxSessionType;
 
     @FXML
@@ -75,6 +83,7 @@ public class SecretarySessionController {
         comboBoxSessionType.setItems(FXCollections.observableList(sessionsType));
     }
 
+    @FXML
     public void onAddSession(ActionEvent actionEvent) {
         Timestamp dateTimeStartSession = parseTime(datePickerStartDate, textFieldStartTime);
         Timestamp dateTimeEndSession = parseTime(datePickerEndDate, textFieldEndTime);
