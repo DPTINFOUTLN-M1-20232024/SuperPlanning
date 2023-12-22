@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,22 +48,39 @@ public class Session implements Identifiable {
         return new Session(id, begin, finish, module, instructor, room, sessionType);
     }
 
-    public static Set<Session> getSessionsFromStudent(Student student, String beginDay, String endDay) throws DataAccessException, ParseException{
+    public static Session of(Timestamp begin, Timestamp finish, Module module, Instructor instructor, Room room, SessionType sessionType) {
+        return new Session(-1, begin, finish, module, instructor, room, sessionType);
+    }
 
+    /**
+     * Return the set of session from student and a range.
+     *
+     * @param student
+     * @param beginDateString format: yyyy-MM-dd
+     * @param endDateString format: yyyy-MM-dd
+     * @return the set of session from student and a range.
+     * @throws DataAccessException
+     * @throws ParseException if beginDateString or endDateString have
+     *      a wrong format
+     */
+    public static Set<Session> getSessionsFromStudent(Student student, String beginDateString, String endDateString) throws DataAccessException, ParseException{
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("%s 00:00:01".formatted(beginDateString));
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("%s 23:59:59".formatted(endDateString));
+        Timestamp start = new Timestamp(startDate.getTime());
+        Timestamp end = new Timestamp(endDate.getTime());
+        return getSessionsFromStudent(student, start, end);
+    }
+
+    public static Set<Session> getSessionsFromStudent(Student student, Timestamp beginTime, Timestamp endTime) throws DataAccessException {
         Set<Module> modules;
         try (ModuleDAO moduleDAO = new ModuleDAO()) {
             modules = moduleDAO.getModulesFromGrade(student.getGrade());
         }
 
-        Date startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("%s 00:00:01".formatted(beginDay));
-        Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("%s 23:59:59".formatted(endDay));
-        Timestamp start = new Timestamp(startDate.getTime());
-        Timestamp end = new Timestamp(endDate.getTime());
-
         Set<Session> sessions = new HashSet<>();
         try (SessionDAO sessionDAO = new SessionDAO()){
             for (Module module : modules) {
-                sessions.addAll(sessionDAO.getSessionsFromModuleBetween(module, start, end));
+                sessions.addAll(sessionDAO.getSessionsFromModuleBetween(module, beginTime, endTime));
             }
         }
 

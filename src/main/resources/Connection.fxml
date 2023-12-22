@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,7 +17,6 @@
             <HBox alignment="CENTER" spacing="5.0" />
         </top>
     </BorderPane>
-    <TextArea layoutX="1.0" layoutY="25.0" prefHeight="373.0" prefWidth="283.0" />
     <ImageView fitHeight="362.0" fitWidth="283.0" layoutY="31.0">
         <image>
             <Image url="@image/SUPERmodifier.png" />
@@ -33,18 +32,18 @@
             <Font size="25.0" />
         </font>
     </Label>
-    <TextField fx:id="textFieldMail"  layoutX="300.0" layoutY="150.0" />
+    <TextField fx:id="textFieldMail" layoutX="300.0" layoutY="150.0" />
     <Label layoutX="296.0" layoutY="194.0" text="Mot de passe">
         <font>
             <Font size="25.0" />
         </font>
     </Label>
-    <TextField fx:id="textFieldPassword" layoutX="300.0" layoutY="239.0" />
-    <Button onAction="#onButtonConnectClick" layoutX="310.0" layoutY="335.0" mnemonicParsing="false" text="Se connecter">
+    <Button layoutX="310.0" layoutY="335.0" mnemonicParsing="false" onAction="#onButtonConnectClick" text="Se connecter">
         <font>
             <Font size="21.0" />
         </font>
     </Button>
     <Button layoutX="445.0" layoutY="277.0" mnemonicParsing="false" text="Mot de passe oublié" underline="true" />
+   <PasswordField fx:id="textFieldPassword" layoutX="300.0" layoutY="224.0" />
 
 </AnchorPane>

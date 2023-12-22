@@ -11,7 +11,7 @@ import fr.wedidit.superplanning.superplanning.identifiables.humans.Instructor;
 import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Grade;
 import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
-import fr.wedidit.superplanning.superplanning.identifiables.others.StudentConnection;
+import fr.wedidit.superplanning.superplanning.identifiables.others.SessionConnection;
 import fr.wedidit.superplanning.superplanning.properties.PropertyLoader;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,8 +38,8 @@ public class TestAreaAdam {
         testTernaryDDB();
         testConnection();
 
-        StudentConnection studentConnection = StudentConnection.of("adam", "lol");
-        log.info(studentConnection.getHashPassword());
+        SessionConnection sessionConnection = SessionConnection.of("adam", "lol");
+        log.info(sessionConnection.getHashPassword());
     }
 
     public static void loadProperties() {
@@ -107,20 +107,20 @@ public class TestAreaAdam {
         }
 
 
-        // Création de l'étudiant dans la table "Student" et "StudentConnection"
+        // Création de l'étudiant dans la table "Student" et "SessionConnection"
         Student alexandre = Student.of("alexandre", "lerousseau", grade);
-        StudentConnection studentConnection = StudentConnection.of("alexandre.lerousseau@gmail.com", "azerty");
+        SessionConnection sessionConnection = SessionConnection.of("alexandre.lerousseau@gmail.com", "azerty");
         try (StudentConnectionDAO studentConnectionDAO = new StudentConnectionDAO()) {
-            alexandre = studentConnectionDAO.persist(studentConnection, alexandre);
+            alexandre = studentConnectionDAO.persist(sessionConnection, alexandre);
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
         }
 
         // Récupération de l'étudiant par couple mail/mot de passe
         Student alexandre1;
-        StudentConnection studentConnection2 = StudentConnection.of("alexandre.lerousseau@gmail.com", "azerty");
+        SessionConnection sessionConnection2 = SessionConnection.of("alexandre.lerousseau@gmail.com", "azerty");
         try (StudentConnectionDAO studentConnectionDAO = new StudentConnectionDAO()) {
-            alexandre1 = studentConnectionDAO.getStudentFromConnection(studentConnection2);
+            alexandre1 = studentConnectionDAO.getStudentFromConnection(sessionConnection2);
         } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getLocalizedMessage());
             return;
