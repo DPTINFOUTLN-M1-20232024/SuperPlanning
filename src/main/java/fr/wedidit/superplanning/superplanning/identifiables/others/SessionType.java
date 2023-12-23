@@ -4,11 +4,11 @@ import javafx.scene.paint.Paint;
 
 public enum SessionType {
 
-    CM("#EBFB7A"),
-    TD("#4BDFDF"),
-    TP("#20DE59"),
-    CC("#E21A1A"),
-    CT("#E21A1A");
+    CM("#F37302"),
+    TD("#F39C4F"),
+    TP("#47991E"),
+    CC("#E91D1D"),
+    CT("#E91D1D");
 
     private final String colorHexa;
 
