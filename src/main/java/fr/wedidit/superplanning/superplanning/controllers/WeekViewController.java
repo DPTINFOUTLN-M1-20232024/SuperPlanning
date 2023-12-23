@@ -9,8 +9,10 @@ import fr.wedidit.superplanning.superplanning.utils.gui.SessionWeekGUI;
 import fr.wedidit.superplanning.superplanning.utils.others.TimeUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -66,6 +68,18 @@ public class WeekViewController {
 
         initStudentInfos();
 
+    }
+
+    @FXML
+    private void onMouseEntered(MouseEvent event) {
+        Button button = (Button) event.getSource();
+        button.setStyle("-fx-background-color: #4F7FAA");
+    }
+
+    @FXML
+    private void onMouseExited(MouseEvent event) {
+        Button button = (Button) event.getSource();
+        button.setStyle("-fx-background-color:  #1C3C66");
     }
 
     private void initDaysLabels(Timestamp beginWeek) {

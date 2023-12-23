@@ -84,7 +84,6 @@ public class DailyViewController {
     private void onMouseExited(MouseEvent event) {
         Button button = (Button) event.getSource();
         button.setStyle("-fx-background-color: #4E4F55");
-        //button.setStyle("-fx-text-fill: #FFFFFF;");
     }
 
     private void showDaySessions(Timestamp startDay, Timestamp endDay) {
