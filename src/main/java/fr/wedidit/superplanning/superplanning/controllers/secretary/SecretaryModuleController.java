@@ -1,6 +1,7 @@
 package fr.wedidit.superplanning.superplanning.controllers.secretary;
 
-import fr.wedidit.superplanning.superplanning.database.dao.daolist.others.ModuleDAO;
+import fr.wedidit.superplanning.superplanning.utils.controllers.SceneSwitcher;
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others.ModuleDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
 import javafx.event.ActionEvent;
@@ -29,12 +30,15 @@ public class SecretaryModuleController {
         try (ModuleDAO moduleDAO = new ModuleDAO()) {
             moduleDAO.fromVariables(moduleName, gradeId);
         } catch (DataAccessException dataAccessException) {
-            log.error(dataAccessException.getLocalizedMessage());
             Popup.error(dataAccessException.getLocalizedMessage());
             return;
         }
 
         Popup.popup("Succès", "Ajout du module avec succès !");
 
+    }
+
+    public void onBack(ActionEvent actionEvent) {
+        SceneSwitcher.switchToScene(actionEvent, "SecretaryManagement.fxml");
     }
 }

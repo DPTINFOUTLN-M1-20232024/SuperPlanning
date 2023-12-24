@@ -1,6 +1,7 @@
 package fr.wedidit.superplanning.superplanning;
 
 import fr.wedidit.superplanning.superplanning.properties.PropertyLoader;
+import fr.wedidit.superplanning.superplanning.utils.controllers.SceneLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,13 +26,9 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) {
-        Parent root;
-        try {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("Connection.fxml")));
-        } catch (IOException ioException) {
-            log.error(ioException.getLocalizedMessage());
-            return;
-        }
+        Parent root = SceneLoader.loadScene("Connection.fxml");
+        if (root == null) return;
+        
         stage.setScene(new Scene(root));
         loadProperties();
         stage.setResizable(false);

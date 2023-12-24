@@ -1,6 +1,6 @@
 package fr.wedidit.superplanning.superplanning.utils.gui;
 
-import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
+import fr.wedidit.superplanning.superplanning.identifiables.completes.others.Session;
 import fr.wedidit.superplanning.superplanning.utils.maths.Point;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
 import javafx.scene.control.Label;

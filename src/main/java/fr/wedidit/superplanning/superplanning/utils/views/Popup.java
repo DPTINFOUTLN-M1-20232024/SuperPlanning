@@ -7,7 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Popup {
 
     private Popup() {}
@@ -35,5 +37,6 @@ public class Popup {
 
     public static void error(String message) {
         popup("Error", message);
+        log.error(message);
     }
 }

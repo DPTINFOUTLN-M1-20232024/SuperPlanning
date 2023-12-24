@@ -2,7 +2,7 @@ package fr.wedidit.superplanning.superplanning.account;
 
 import fr.wedidit.superplanning.superplanning.account.exceptions.AlreadyConnectedException;
 import fr.wedidit.superplanning.superplanning.account.exceptions.NoConnectedException;
-import fr.wedidit.superplanning.superplanning.identifiables.humans.Student;
+import fr.wedidit.superplanning.superplanning.identifiables.completes.humans.Student;
 
 public class AccountStudent {
 

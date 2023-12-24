@@ -16,7 +16,6 @@
         <lombok.version>1.18.30</lombok.version>
         <javafx.version>17.0.2</javafx.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>

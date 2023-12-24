@@ -1,14 +1,19 @@
 package fr.wedidit.superplanning.superplanning.controllers.secretary;
 
-import fr.wedidit.superplanning.superplanning.database.dao.DAOPage;
-import fr.wedidit.superplanning.superplanning.database.dao.daolist.humans.InstructorDAO;
-import fr.wedidit.superplanning.superplanning.database.dao.daolist.others.GradeDAO;
-import fr.wedidit.superplanning.superplanning.database.dao.daolist.others.ModuleDAO;
+import fr.wedidit.superplanning.superplanning.utils.controllers.SceneSwitcher;
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.concretes.RoomDAO;
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.humans.InstructorDAO;
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others.ModuleDAO;
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others.SessionDAO;
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.simples.concretes.RoomSimpleDAO;
+import fr.wedidit.superplanning.superplanning.database.dao.daolist.simples.others.ModuleSimpleDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
-import fr.wedidit.superplanning.superplanning.identifiables.humans.Instructor;
-import fr.wedidit.superplanning.superplanning.identifiables.others.Grade;
-import fr.wedidit.superplanning.superplanning.identifiables.others.Module;
-import fr.wedidit.superplanning.superplanning.identifiables.others.SessionType;
+import fr.wedidit.superplanning.superplanning.database.exceptions.IdentifiableNotFoundException;
+import fr.wedidit.superplanning.superplanning.identifiables.completes.concretes.Room;
+import fr.wedidit.superplanning.superplanning.identifiables.completes.humans.Instructor;
+import fr.wedidit.superplanning.superplanning.identifiables.completes.others.Module;
+import fr.wedidit.superplanning.superplanning.identifiables.completes.others.Session;
+import fr.wedidit.superplanning.superplanning.identifiables.completes.others.SessionType;
 import fr.wedidit.superplanning.superplanning.utils.others.TimeUtils;
 import fr.wedidit.superplanning.superplanning.utils.views.AutoCompleteBox;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
@@ -21,8 +26,8 @@ import javafx.scene.control.TextField;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Slf4j
 public class SecretarySessionController {
@@ -31,63 +36,97 @@ public class SecretarySessionController {
     @FXML
     public TextField textFieldEndTime;
     @FXML
-    public DatePicker datePickerStartDate;
+    public DatePicker datePickerDate;
     @FXML
-    public DatePicker datePickerEndDate;
+    private ComboBox<String> comboBoxInstructor;
     @FXML
-    public ComboBox<Instructor> comboBoxInstructor;
+    private ComboBox<String> comboBoxModule;
     @FXML
-    public ComboBox<Module> comboBoxModule;
+    private ComboBox<String> comboBoxSessionType;
     @FXML
-    public ComboBox<Grade> comboBoxGrade;
-    @FXML
-    public ComboBox<SessionType> comboBoxSessionType;
+    private ComboBox<String> comboBoxRoom;
 
     @FXML
     private void initialize() {
-        List<Instructor> instructors;
         try (InstructorDAO instructorDAO = new InstructorDAO()) {
-            instructors = instructorDAO.findAll().resultList();
+            new AutoCompleteBox(comboBoxInstructor, instructorDAO);
         } catch (DataAccessException dataAccessException) {
-            log.error(dataAccessException.getLocalizedMessage());
             Popup.error(dataAccessException.getLocalizedMessage());
             return;
         }
 
-        List<Module> modules;
-        try (ModuleDAO moduleDAO = new ModuleDAO()) {
-            modules = moduleDAO.findAll().resultList();
+        try (ModuleSimpleDAO moduleDAO = new ModuleSimpleDAO()) {
+            new AutoCompleteBox(comboBoxModule, moduleDAO);
         } catch (DataAccessException dataAccessException) {
-            log.error(dataAccessException.getLocalizedMessage());
             Popup.error(dataAccessException.getLocalizedMessage());
             return;
         }
 
-        List<Grade> grade;
-        try (GradeDAO gradeDAO = new GradeDAO()) {
-            grade = gradeDAO.findAll().resultList();
+        try (RoomSimpleDAO roomSimpleDAO = new RoomSimpleDAO()) {
+            new AutoCompleteBox(comboBoxRoom, roomSimpleDAO);
         } catch (DataAccessException dataAccessException) {
-            log.error(dataAccessException.getLocalizedMessage());
             Popup.error(dataAccessException.getLocalizedMessage());
             return;
         }
 
-        comboBoxInstructor.setItems(FXCollections.observableList(instructors));
-        comboBoxModule.setItems(FXCollections.observableList(modules));
-        comboBoxGrade.setItems(FXCollections.observableList(grade));
-
-        new AutoCompleteBox<Instructor>(comboBoxInstructor);
-        new AutoCompleteBox<Module>(comboBoxModule);
-        new AutoCompleteBox<Grade>(comboBoxGrade);
-        List<SessionType> sessionsType = List.of(SessionType.values());
+        List<String> sessionsType = Stream.of(SessionType.values()).map(SessionType::toString).toList();
         comboBoxSessionType.setItems(FXCollections.observableList(sessionsType));
     }
 
     @FXML
     public void onAddSession(ActionEvent actionEvent) {
-        Timestamp dateTimeStartSession = parseTime(datePickerStartDate, textFieldStartTime);
-        Timestamp dateTimeEndSession = parseTime(datePickerEndDate, textFieldEndTime);
+        // TODO verifier:
+        //      - si la salle est disponible à la date demandée
+        //      - si le prof n'a pas déjà cours à la date demandée
+        //      - si la promo n'a pas déjà cours à la date demandée
+        Timestamp dateTimeStartSession = parseTime(datePickerDate, textFieldStartTime);
+        Timestamp dateTimeEndSession = parseTime(datePickerDate, textFieldEndTime);
 
+        Module module;
+        long moduleId = AutoCompleteBox.getIdFromSearchBar(comboBoxModule);
+        try (ModuleDAO moduleDAO = new ModuleDAO()){
+            module = moduleDAO.find(moduleId).orElseThrow(() -> new IdentifiableNotFoundException(moduleId));
+        } catch (DataAccessException dataAccessException) {
+            Popup.error(dataAccessException.getLocalizedMessage());
+            return;
+        }
+
+        Instructor instructor;
+        long instructorId = AutoCompleteBox.getIdFromSearchBar(comboBoxInstructor);
+        try (InstructorDAO instructorDAO = new InstructorDAO()){
+            instructor = instructorDAO.find(moduleId).orElseThrow(() -> new IdentifiableNotFoundException(instructorId));
+        } catch (DataAccessException dataAccessException) {
+            Popup.error(dataAccessException.getLocalizedMessage());
+            return;
+        }
+
+        Room room;
+        long roomId = AutoCompleteBox.getIdFromSearchBar(comboBoxRoom);
+        try (RoomDAO roomDAO = new RoomDAO()){
+            room = roomDAO.find(roomId).orElseThrow(() -> new IdentifiableNotFoundException(roomId));
+        } catch (DataAccessException dataAccessException) {
+            Popup.error(dataAccessException.getLocalizedMessage());
+            return;
+        }
+
+        SessionType sessionType = SessionType.valueOf(comboBoxSessionType.getValue());
+
+        Session session = Session.of(dateTimeStartSession,
+                dateTimeEndSession,
+                module,
+                instructor,
+                room,
+                sessionType
+        );
+
+        try (SessionDAO sessionDAO = new SessionDAO()) {
+            sessionDAO.persist(session);
+        } catch (DataAccessException dataAccessException) {
+            Popup.error(dataAccessException.getLocalizedMessage());
+            return;
+        }
+
+        Popup.popup("Succès", "Cours ajouté avec succès");
 
     }
 
@@ -103,4 +142,7 @@ public class SecretarySessionController {
         return Timestamp.valueOf(datePicker.getValue().atTime(time[0], time[1]));
     }
 
+    public void onBack(ActionEvent actionEvent) {
+        SceneSwitcher.switchToScene(actionEvent, "SecretaryManagement.fxml");
+    }
 }
