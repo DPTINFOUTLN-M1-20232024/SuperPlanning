@@ -88,6 +88,12 @@ public class DailyViewController {
         button.setStyle("-fx-background-color: #4E4F55");
     }
 
+    @FXML
+    private void onButtonDisconnect(ActionEvent actionEvent) {
+        AccountStudent.disconnect();
+        SceneSwitcher.switchToScene(actionEvent, "Connection.fxml");
+    }
+
     private void showDaySessions(Timestamp startDay, Timestamp endDay) {
         Student student = AccountStudent.getStudentAccount();
         Set<Session> sessionsDay;

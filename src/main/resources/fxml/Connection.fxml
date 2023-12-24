@@ -33,7 +33,7 @@
         </font>
     </Label>
     <TextField fx:id="textFieldMail" layoutX="300.0" layoutY="150.0" />
-   <PasswordField fx:id="textFieldPassword" layoutX="300.0" layoutY="224.0" />
+   <PasswordField fx:id="textFieldPassword" onAction="#onEnter" layoutX="300.0" layoutY="224.0" />
     <Label layoutX="296.0" layoutY="194.0" text="Mot de passe">
         <font>
             <Font size="25.0" />

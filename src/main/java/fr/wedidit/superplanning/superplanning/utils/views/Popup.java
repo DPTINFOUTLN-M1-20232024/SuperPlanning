@@ -22,7 +22,7 @@ public class Popup {
 
         Label labelMessage = new Label(message);
 
-        Button buttonClosePopup = new Button("Close");
+        Button buttonClosePopup = new Button("Fermer");
         buttonClosePopup.setOnAction(e -> popupWindow.close());
 
         VBox layout= new VBox(10);
@@ -33,6 +33,10 @@ public class Popup {
 
         popupWindow.setScene(scene);
         popupWindow.showAndWait();
+    }
+
+    public static void info(String message) {
+        popup("Informations", message);
     }
 
     public static void error(String message) {

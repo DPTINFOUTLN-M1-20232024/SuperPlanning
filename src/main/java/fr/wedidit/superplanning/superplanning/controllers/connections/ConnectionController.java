@@ -2,6 +2,7 @@ package fr.wedidit.superplanning.superplanning.controllers.connections;
 
 import fr.wedidit.superplanning.superplanning.account.AccountSecretary;
 import fr.wedidit.superplanning.superplanning.account.AccountStudent;
+import fr.wedidit.superplanning.superplanning.account.AccountType;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others.SecretaryConnectionDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others.StudentConnectionDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
@@ -22,38 +23,35 @@ public class ConnectionController {
     @FXML
     private TextField textFieldMail;
 
+    @FXML
     public void onButtonConnectClick(ActionEvent actionEvent) {
+        tryLogin(actionEvent);
+    }
+
+    @FXML
+    public void onEnter(ActionEvent actionEvent) {
+        tryLogin(actionEvent);
+    }
+
+    private void tryLogin(ActionEvent actionEvent) {
         String mail = textFieldMail.getText();
         String password = textFieldPassword.getText();
 
-        // Loading the student from (mail, password)
-        Student student;
         SessionConnection sessionConnection = SessionConnection.of(mail, password);
-        try (StudentConnectionDAO studentConnectionDAO = new StudentConnectionDAO()) {
-            student = studentConnectionDAO.getStudentFromConnection(sessionConnection);
-        } catch (DataAccessException dataAccessException) {
-            Popup.error(dataAccessException.getLocalizedMessage());
+
+        AccountStudent.connect(sessionConnection);
+        if (AccountStudent.isConnected()) {
+            SceneSwitcher.switchToScene(actionEvent, AccountType.STUDENT.getPageToSwitch());
             return;
         }
 
-        // Check if mail and password is correct
-        if (student == null) {
-
-            try (SecretaryConnectionDAO secretaryConnectionDAO = new SecretaryConnectionDAO()) {
-                if (secretaryConnectionDAO.getSecretaryFromConnection(sessionConnection)) {
-                    AccountSecretary.logging();
-                    SceneSwitcher.switchToScene(actionEvent, "SecretaryManagement.fxml");
-                    return;
-                }
-            } catch (DataAccessException dataAccessException) {
-                Popup.error(dataAccessException.getLocalizedMessage());
-            }
-
-            Popup.error("Mail or password is not correct");
+        AccountSecretary.connect(sessionConnection);
+        if (AccountSecretary.isConnected()) {
+            SceneSwitcher.switchToScene(actionEvent, AccountType.SECRETARY.getPageToSwitch());
             return;
         }
 
-        AccountStudent.connect(student);
-        SceneSwitcher.switchToScene(actionEvent, "DailyView.fxml");
+        Popup.error("Mail ou mot de passe éronné.");
     }
+
 }
