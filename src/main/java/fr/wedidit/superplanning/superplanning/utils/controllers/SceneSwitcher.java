@@ -1,16 +1,11 @@
 package fr.wedidit.superplanning.superplanning.utils.controllers;
 
-import fr.wedidit.superplanning.superplanning.utils.views.Popup;
 import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
-import java.util.Objects;
 
 /**
  * Utility class for JavaFX scene switching.
@@ -31,7 +26,6 @@ public class SceneSwitcher {
         Parent root = SceneLoader.loadScene(fileName);
 
         if (root == null) return;
-        //root = FXMLLoader.load(Objects.requireNonNull(SceneSwitcher.class.getClassLoader().getResource("fxml/%s".formatted(fileName))));
 
         scene = new Scene(root);
 

@@ -4,7 +4,6 @@ import fr.wedidit.superplanning.superplanning.utils.controllers.SceneSwitcher;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.humans.InstructorDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.identifiables.completes.humans.Instructor;
-import fr.wedidit.superplanning.superplanning.utils.controllers.validator.ControllerValidatorUtils;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

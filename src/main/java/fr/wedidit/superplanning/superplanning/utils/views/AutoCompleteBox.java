@@ -59,17 +59,12 @@ public class AutoCompleteBox implements EventHandler<KeyEvent> {
         });
 
         this.comboBox.getEditor().setOnMouseClicked(event ->{
-            if(event.getButton().equals(MouseButton.PRIMARY)){
-                if(event.getClickCount() == 2){
-                    return;
-                }
-            }
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) return;
             this.comboBox.show();
         });
 
-        this.comboBox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            moveCaret(this.comboBox.getEditor().getText().length());
-        });
+        this.comboBox.getSelectionModel().selectedIndexProperty().addListener(
+                (observable, oldValue, newValue) -> moveCaret(this.comboBox.getEditor().getText().length()));
 
         this.comboBox.setOnKeyPressed(t -> comboBox.hide());
 

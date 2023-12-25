@@ -1,35 +1,27 @@
 package fr.wedidit.superplanning.superplanning.controllers.secretary;
 
-import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.humans.InstructorDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.humans.StudentDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others.GradeDAO;
-import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others.ModuleDAO;
-import fr.wedidit.superplanning.superplanning.database.dao.daolist.simples.concretes.RoomSimpleDAO;
-import fr.wedidit.superplanning.superplanning.database.dao.daolist.simples.others.ModuleSimpleDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.database.exceptions.IdentifiableNotFoundException;
 import fr.wedidit.superplanning.superplanning.identifiables.completes.humans.Student;
 import fr.wedidit.superplanning.superplanning.identifiables.completes.others.Grade;
-import fr.wedidit.superplanning.superplanning.identifiables.completes.others.Module;
-import fr.wedidit.superplanning.superplanning.identifiables.completes.others.SessionType;
 import fr.wedidit.superplanning.superplanning.utils.controllers.SceneSwitcher;
 import fr.wedidit.superplanning.superplanning.utils.views.AutoCompleteBox;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import lombok.Data;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 public class SecretaryStudentController {
 
-    public TextField textFieldLastName;
-    public TextField textFieldFirstName;
-    public ComboBox<String> comboBoxGrade;
+    @FXML
+    private TextField textFieldLastName;
+    @FXML
+    private TextField textFieldFirstName;
+    @FXML
+    private ComboBox<String> comboBoxGrade;
 
     @FXML
     public void initialize() {

@@ -1,7 +1,5 @@
 package fr.wedidit.superplanning.superplanning.utils.others;
 
-import fr.wedidit.superplanning.superplanning.utils.controllers.SceneLoader;
-
 import java.io.InputStream;
 import java.net.URL;
 
