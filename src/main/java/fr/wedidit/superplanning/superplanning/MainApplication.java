@@ -4,16 +4,13 @@ import fr.wedidit.superplanning.superplanning.properties.PropertyLoader;
 import fr.wedidit.superplanning.superplanning.utils.controllers.SceneLoader;
 import fr.wedidit.superplanning.superplanning.utils.others.FileUtils;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.util.Objects;
 
 @Slf4j
 public class MainApplication extends Application {

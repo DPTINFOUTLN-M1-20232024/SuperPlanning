@@ -8,6 +8,7 @@ module fr.wedidit.superplanning.superplanning {
     requires com.h2database;
     requires java.management;
     requires com.google.common;
+    requires mail;
 
     opens fr.wedidit.superplanning.superplanning to javafx.fxml;
     exports fr.wedidit.superplanning.superplanning;

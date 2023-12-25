@@ -82,6 +82,14 @@ public class SecretarySessionController {
         Timestamp dateTimeStartSession = parseTime(datePickerDate, textFieldStartTime);
         Timestamp dateTimeEndSession = parseTime(datePickerDate, textFieldEndTime);
 
+        SessionType sessionType;
+        try {
+            sessionType = SessionType.valueOf(comboBoxSessionType.getValue());
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Popup.error("Veuillez sélectionner un type de cours.");
+            return;
+        }
+
         Module module;
         long moduleId = AutoCompleteBox.getIdFromSearchBar(comboBoxModule);
         try (ModuleDAO moduleDAO = new ModuleDAO()){
@@ -109,8 +117,6 @@ public class SecretarySessionController {
             return;
         }
 
-        SessionType sessionType = SessionType.valueOf(comboBoxSessionType.getValue());
-
         Session session = Session.of(dateTimeStartSession,
                 dateTimeEndSession,
                 module,
@@ -127,7 +133,8 @@ public class SecretarySessionController {
         }
 
         Popup.popup("Succès", "Cours ajouté avec succès");
-
+        textFieldStartTime.clear();
+        textFieldEndTime.clear();
     }
 
     private Timestamp parseTime(DatePicker datePicker, TextField textField) {

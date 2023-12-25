@@ -1,5 +1,7 @@
 package fr.wedidit.superplanning.superplanning.controllers.secretary;
 
+import fr.wedidit.superplanning.superplanning.controllers.exceptions.ControllerValidator;
+import fr.wedidit.superplanning.superplanning.controllers.exceptions.ControllerValidatorException;
 import fr.wedidit.superplanning.superplanning.utils.controllers.SceneSwitcher;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.humans.InstructorDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
@@ -20,17 +22,16 @@ public class SecretaryInstructorController {
 
 
     public void onAddInstructor(ActionEvent actionEvent) {
-        String firstNameInstructor = firstNameInstructorText.getText();
-        if (firstNameInstructor.isEmpty()) {
-            Popup.info("Le prénom de l'enseignant n'a pas été renseigné");
+        try {
+            ControllerValidator.textFieldIsNotEmpty(firstNameInstructorText);
+            ControllerValidator.textFieldIsNotEmpty(lastNameInstructorText);
+        } catch (ControllerValidatorException controllerValidatorException) {
+            Popup.error(controllerValidatorException.getLocalizedMessage());
             return;
         }
 
+        String firstNameInstructor = firstNameInstructorText.getText();
         String lastNameInstructor = lastNameInstructorText.getText();
-        if (lastNameInstructor.isEmpty()) {
-            Popup.info("Le nom de famille de l'enseignant n'a pas été renseigné");
-            return;
-        }
 
         try (InstructorDAO instructorDAO = new InstructorDAO()) {
             instructorDAO.persist(Instructor.of(firstNameInstructor, lastNameInstructor));
