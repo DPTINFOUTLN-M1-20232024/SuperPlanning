@@ -1,5 +1,6 @@
 package fr.wedidit.superplanning.superplanning.controllers.secretary;
 
+import fr.wedidit.superplanning.superplanning.account.AccountSecretary;
 import fr.wedidit.superplanning.superplanning.utils.controllers.SceneSwitcher;
 import javafx.event.ActionEvent;
 
@@ -23,5 +24,10 @@ public class SecretaryManagementController {
 
     public void addStudent(ActionEvent actionEvent) {
         SceneSwitcher.switchToScene(actionEvent, "SecretaryAdderStudent.fxml");
+    }
+
+    public void onButtonDisconnect(ActionEvent actionEvent) {
+        AccountSecretary.disconnect();
+        SceneSwitcher.switchToScene(actionEvent, "Connection.fxml");
     }
 }
