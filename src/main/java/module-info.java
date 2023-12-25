@@ -19,6 +19,4 @@ module fr.wedidit.superplanning.superplanning {
     opens fr.wedidit.superplanning.superplanning.controllers.connections to javafx.fxml;
     exports fr.wedidit.superplanning.superplanning.controllers.sessions;
     opens fr.wedidit.superplanning.superplanning.controllers.sessions to javafx.fxml;
-    exports fr.wedidit.superplanning.superplanning.utils.controllers.validator;
-    opens fr.wedidit.superplanning.superplanning.utils.controllers.validator to javafx.fxml;
 }
