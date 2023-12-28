@@ -1,6 +1,5 @@
-package fr.wedidit.superplanning.superplanning.controllers.exceptions;
+package fr.wedidit.superplanning.superplanning.controllers.validators;
 
-import fr.wedidit.superplanning.superplanning.utils.views.Popup;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
@@ -14,15 +13,15 @@ public class ControllerValidator {
         }
     }
 
-    public static void textFieldIsNotEmpty(TextField textField) throws ControllerValidatorException {
+    public static void textFieldIsNotEmpty(TextField textField, String message) throws ControllerValidatorException {
         widgetIsNotNull(textField);
         if (textField.getText().isEmpty()) {
-            throw new ControllerValidatorException("Le champs de texte ne doit pas être vide");
+            throw new ControllerValidatorException(message);
         }
     }
 
     public static long getId(TextField textField) throws  ControllerValidatorException {
-        textFieldIsNotEmpty(textField);
+        textFieldIsNotEmpty(textField, "Vous devez remplir indiquer un id correct");
         String textFieldContent = textField.getText();
         long longValue;
         try {

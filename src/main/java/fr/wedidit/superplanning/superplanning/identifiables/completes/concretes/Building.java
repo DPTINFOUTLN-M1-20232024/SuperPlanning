@@ -22,4 +22,6 @@ public class Building implements Identifiable {
         return new Building(id, name);
     }
 
+    public static Building of(String name) {return new Building(-1, name);}
+
 }

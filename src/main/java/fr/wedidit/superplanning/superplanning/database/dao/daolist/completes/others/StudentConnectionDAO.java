@@ -1,5 +1,6 @@
 package fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others;
 
+import fr.wedidit.superplanning.superplanning.database.DBUtils;
 import fr.wedidit.superplanning.superplanning.database.dao.AbstractDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.TableType;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.humans.StudentDAO;
@@ -21,13 +22,15 @@ public class StudentConnectionDAO implements AutoCloseable {
     private Connection connection;
     private PreparedStatement psPersist;
     private PreparedStatement psFindStudent;
+    private PreparedStatement psUpdate;
+    private PreparedStatement psGetStudentIdFromMail;
 
     public StudentConnectionDAO() throws DataAccessException {
 
-        String requestPersist = """
-                INSERT INTO %s (ID_STUDENT, MAIL, HASH_PASSWORD) VALUES
-                    (?, ?, ?);
-                """.formatted(TableType.STUDENT_CONNECTION.name());
+        String requestPersist = DBUtils.createPSPersist(TableType.STUDENT_CONNECTION.name(),
+                StudentConnectionColumn.ID_STUDENT.name(),
+                StudentConnectionColumn.MAIL.name(),
+                StudentConnectionColumn.HASH_PASSWORD.name());
 
         String requestFindStudent = """
                 SELECT %s.ID_STUDENT
@@ -39,6 +42,24 @@ public class StudentConnectionDAO implements AutoCloseable {
                     TableType.STUDENT_CONNECTION.name(),
                     TableType.STUDENT_CONNECTION.name());
 
+        String requestUpdateFromIdStudent = """
+                UPDATE %s SET
+                %s=?
+                WHERE %s=?;
+                """.formatted(TableType.STUDENT_CONNECTION,
+                    StudentConnectionColumn.HASH_PASSWORD,
+                    StudentConnectionColumn.ID_STUDENT);
+
+        String requestGetStudentIdFromMail = """
+                SELECT %s.%s
+                FROM %s
+                WHERE %s.%s = ?;
+                """.formatted(TableType.STUDENT_CONNECTION.name(),
+                    StudentConnectionColumn.ID_STUDENT,
+                    TableType.STUDENT_CONNECTION.name(),
+                    TableType.STUDENT_CONNECTION.name(),
+                    StudentConnectionColumn.MAIL);
+
         try {
             this.connection = DBCPDataSource.getConnection();
         } catch (SQLException sqlException) {
@@ -47,16 +68,12 @@ public class StudentConnectionDAO implements AutoCloseable {
 
         try {
             this.psPersist = this.connection.prepareStatement(requestPersist);
-        } catch (SQLException sqlException) {
-            log.error("Unable to create prepared statement persist request from StudentConnectionDAO.");
-            log.error("Request: %s".formatted(requestPersist));
-        }
-
-        try {
             this.psFindStudent = this.connection.prepareStatement(requestFindStudent);
+            this.psUpdate = this.connection.prepareStatement(requestUpdateFromIdStudent);
+            this.psGetStudentIdFromMail = this.connection.prepareStatement(requestGetStudentIdFromMail);
         } catch (SQLException sqlException) {
-            log.error("Unable to create prepared statement requestFindStudent request from StudentConnectionDAO.");
-            log.error("Request: %s".formatted(requestFindStudent));
+            log.error("Request: %s".formatted(requestPersist));
+            log.error(sqlException.getLocalizedMessage());
         }
 
     }
@@ -79,9 +96,9 @@ public class StudentConnectionDAO implements AutoCloseable {
         }
 
         try {
-            psPersist.setLong(1, studentWithID.getId());
-            psPersist.setString(2, sessionConnection.getMail());
-            psPersist.setString(3, sessionConnection.getHashPassword());
+            psPersist.setLong(StudentConnectionColumn.ID_STUDENT.colNumber(), studentWithID.getId());
+            psPersist.setString(StudentConnectionColumn.MAIL.colNumber(), sessionConnection.getMail());
+            psPersist.setString(StudentConnectionColumn.HASH_PASSWORD.colNumber(), sessionConnection.getHashPassword());
             psPersist.executeUpdate();
         } catch (SQLException sqlException) {
             throw new DataAccessException(StudentConnectionDAO.class,
@@ -92,6 +109,18 @@ public class StudentConnectionDAO implements AutoCloseable {
         return studentWithID;
     }
 
+    public void update(String hashedPassword, long studentId) throws DataAccessException {
+        try {
+            psUpdate.setString(1, hashedPassword);
+            psUpdate.setLong(2, studentId);
+            psUpdate.executeUpdate();
+        } catch (SQLException sqlException) {
+            throw new DataAccessException(StudentConnectionDAO.class,
+                    sqlException,
+                    "Unable to update");
+        }
+    }
+
     public Student getStudentFromConnection(SessionConnection sessionConnection) throws DataAccessException {
         long idStudent;
         try {
@@ -100,7 +129,7 @@ public class StudentConnectionDAO implements AutoCloseable {
 
             ResultSet rs = psFindStudent.executeQuery();
             if (rs.next()) {
-                idStudent = rs.getLong("ID_STUDENT");
+                idStudent = rs.getLong(StudentConnectionColumn.ID_STUDENT.name());
             } else {
                 return null;
             }
@@ -108,6 +137,27 @@ public class StudentConnectionDAO implements AutoCloseable {
             throw new DataAccessException(StudentConnectionDAO.class,
                     sqlException,
                     "Unable to get student from connection student");
+        }
+
+        try (StudentDAO studentDAO = new StudentDAO()) {
+            return studentDAO.find(idStudent).orElseThrow(() -> new IdentifiableNotFoundException(idStudent));
+        }
+    }
+
+    public Student getStudentFromMail(String mail) throws DataAccessException {
+        long idStudent;
+        try {
+            psGetStudentIdFromMail.setString(1, mail);
+            ResultSet rs = psGetStudentIdFromMail.executeQuery();
+            if (rs.next()) {
+                idStudent = rs.getLong(StudentConnectionColumn.ID_STUDENT.name());
+            } else {
+                return null;
+            }
+        } catch (SQLException sqlException) {
+            throw new DataAccessException(StudentConnectionDAO.class,
+                    sqlException,
+                    "Unable to get student from mail");
         }
 
         try (StudentDAO studentDAO = new StudentDAO()) {
@@ -125,4 +175,15 @@ public class StudentConnectionDAO implements AutoCloseable {
                     "Unable to close");
         }
     }
+
+    private enum StudentConnectionColumn {
+        ID_STUDENT,
+        MAIL,
+        HASH_PASSWORD;
+
+        public int colNumber() {
+            return ordinal() + 1;
+        }
+    }
+
 }

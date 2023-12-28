@@ -9,6 +9,7 @@ import fr.wedidit.superplanning.superplanning.utils.gui.AbstractSessionGUI;
 import fr.wedidit.superplanning.superplanning.utils.gui.SessionDailyGUI;
 import fr.wedidit.superplanning.superplanning.utils.others.TimeUtils;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
+import fr.wedidit.superplanning.superplanning.utils.views.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,6 +42,11 @@ public class DailyViewController {
     private DatePicker datePicker;
 
     public void initialize() {
+        Student student = AccountStudent.getStudentAccount();
+        nameUser.setText(student.getLastname());
+        firstNameUser.setText(student.getFirstname());
+        promotionUser.setText(student.getGrade().getName());
+
         datePicker.setValue(LocalDate.now());
 
         Timestamp[] currentDayDelimitation = TimeUtils.getCurrentDayDelimitation();
@@ -73,7 +79,7 @@ public class DailyViewController {
 
     @FXML
     private void switchToWeekView(ActionEvent event) {
-        SceneSwitcher.switchToScene(event, "WeekView.fxml");
+        SceneSwitcher.switchToScene(event, Views.WEEK_VIEW);
     }
 
     @FXML
@@ -91,7 +97,7 @@ public class DailyViewController {
     @FXML
     private void onButtonDisconnect(ActionEvent actionEvent) {
         AccountStudent.disconnect();
-        SceneSwitcher.switchToScene(actionEvent, "Connection.fxml");
+        SceneSwitcher.switchToScene(actionEvent, Views.CONNECTION);
     }
 
     private void showDaySessions(Timestamp startDay, Timestamp endDay) {
@@ -106,4 +112,8 @@ public class DailyViewController {
         sessionsDay.forEach(session -> sessionGUISet.add(SessionDailyGUI.of(edtFrame, session)));
     }
 
+    @FXML
+    public void onChangeDate(ActionEvent actionEvent) {
+        loadSessions();
+    }
 }

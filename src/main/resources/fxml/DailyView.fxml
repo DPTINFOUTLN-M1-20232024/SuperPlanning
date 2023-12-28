@@ -98,7 +98,7 @@
                      <font>
                         <Font name="System Bold" size="11.0" />
                      </font></Button>
-                        <DatePicker fx:id="datePicker" editable="false" layoutX="191.0" layoutY="55.0" prefHeight="24.0" prefWidth="200.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="60.0" />
+                        <DatePicker fx:id="datePicker" editable="false" layoutX="191.0" layoutY="55.0" onAction="#onChangeDate" prefHeight="24.0" prefWidth="200.0" promptText="12/12/2022" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="60.0" />
                         <Button layoutX="438.0" layoutY="70.0" mnemonicParsing="false" onAction="#nextDay" text="&gt;" AnchorPane.rightAnchor="172.0" AnchorPane.topAnchor="60.0" />
                         <Button layoutX="448.0" layoutY="80.0" mnemonicParsing="false" onAction="#prevDay" text="&lt;" AnchorPane.leftAnchor="172.0" AnchorPane.topAnchor="60.0" />
                     </children>

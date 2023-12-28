@@ -1,12 +1,13 @@
 package fr.wedidit.superplanning.superplanning.controllers.secretary;
 
-import fr.wedidit.superplanning.superplanning.controllers.exceptions.ControllerValidator;
-import fr.wedidit.superplanning.superplanning.controllers.exceptions.ControllerValidatorException;
+import fr.wedidit.superplanning.superplanning.controllers.validators.ControllerValidator;
+import fr.wedidit.superplanning.superplanning.controllers.validators.ControllerValidatorException;
 import fr.wedidit.superplanning.superplanning.utils.controllers.SceneSwitcher;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.humans.InstructorDAO;
 import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import fr.wedidit.superplanning.superplanning.identifiables.completes.humans.Instructor;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
+import fr.wedidit.superplanning.superplanning.utils.views.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -16,22 +17,22 @@ import lombok.extern.slf4j.Slf4j;
 public class SecretaryInstructorController {
 
     @FXML
-    private TextField firstNameInstructorText;
+    private TextField textFieldFirstName;
     @FXML
-    private TextField lastNameInstructorText;
+    private TextField textFieldLastName;
 
-
+    @FXML
     public void onAddInstructor(ActionEvent actionEvent) {
         try {
-            ControllerValidator.textFieldIsNotEmpty(firstNameInstructorText);
-            ControllerValidator.textFieldIsNotEmpty(lastNameInstructorText);
+            ControllerValidator.textFieldIsNotEmpty(textFieldFirstName, "Le prénom doit être renseigné");
+            ControllerValidator.textFieldIsNotEmpty(textFieldLastName, "Le nom de famille doit être renseigné");
         } catch (ControllerValidatorException controllerValidatorException) {
             Popup.error(controllerValidatorException.getLocalizedMessage());
             return;
         }
 
-        String firstNameInstructor = firstNameInstructorText.getText();
-        String lastNameInstructor = lastNameInstructorText.getText();
+        String firstNameInstructor = textFieldFirstName.getText();
+        String lastNameInstructor = textFieldLastName.getText();
 
         try (InstructorDAO instructorDAO = new InstructorDAO()) {
             instructorDAO.persist(Instructor.of(firstNameInstructor, lastNameInstructor));
@@ -41,11 +42,12 @@ public class SecretaryInstructorController {
         }
 
         Popup.popup("Succès", "Ajout de l'enseignant avec succès !");
-        firstNameInstructorText.clear();
-        lastNameInstructorText.clear();
+        textFieldFirstName.clear();
+        textFieldLastName.clear();
     }
 
+    @FXML
     public void onBack(ActionEvent actionEvent) {
-        SceneSwitcher.switchToScene(actionEvent, "SecretaryManagement.fxml");
+        SceneSwitcher.switchToScene(actionEvent, Views.SECRETARY_MANAGEMENT);
     }
 }

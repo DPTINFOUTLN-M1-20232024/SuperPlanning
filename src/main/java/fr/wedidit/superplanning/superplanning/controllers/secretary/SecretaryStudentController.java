@@ -1,8 +1,8 @@
 package fr.wedidit.superplanning.superplanning.controllers.secretary;
 
 import fr.wedidit.superplanning.superplanning.account.SessionConnection;
-import fr.wedidit.superplanning.superplanning.controllers.exceptions.ControllerValidator;
-import fr.wedidit.superplanning.superplanning.controllers.exceptions.ControllerValidatorException;
+import fr.wedidit.superplanning.superplanning.controllers.validators.ControllerValidator;
+import fr.wedidit.superplanning.superplanning.controllers.validators.ControllerValidatorException;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.humans.StudentDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others.GradeDAO;
 import fr.wedidit.superplanning.superplanning.database.dao.daolist.completes.others.StudentConnectionDAO;
@@ -16,6 +16,7 @@ import fr.wedidit.superplanning.superplanning.utils.mail.MailSender;
 import fr.wedidit.superplanning.superplanning.utils.others.FileUtils;
 import fr.wedidit.superplanning.superplanning.utils.views.AutoCompleteBox;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
+import fr.wedidit.superplanning.superplanning.utils.views.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -40,23 +41,23 @@ public class SecretaryStudentController {
             new AutoCompleteBox(comboBoxGrade, gradeDAO);
         } catch (DataAccessException dataAccessException) {
             Popup.error(dataAccessException.getLocalizedMessage());
-            return;
         }
     }
 
+    @FXML
     public void onAddStudent(ActionEvent actionEvent) {
-        String lastName = textFieldLastName.getText();
-        String firstName = textFieldFirstName.getText();
-        String email = textFieldEmail.getText();
-
         try {
-            ControllerValidator.textFieldIsNotEmpty(textFieldLastName);
-            ControllerValidator.textFieldIsNotEmpty(textFieldFirstName);
-            ControllerValidator.textFieldIsNotEmpty(textFieldEmail);
+            ControllerValidator.textFieldIsNotEmpty(textFieldLastName, "Veuillez renseigner un nom de famille");
+            ControllerValidator.textFieldIsNotEmpty(textFieldFirstName, "Veuillez renseigner un prénom");
+            ControllerValidator.textFieldIsNotEmpty(textFieldEmail, "Veuillez renseigner un Email");
         } catch (ControllerValidatorException controllerValidatorException) {
             Popup.error(controllerValidatorException.getLocalizedMessage());
             return;
         }
+
+        String lastName = textFieldLastName.getText();
+        String firstName = textFieldFirstName.getText();
+        String email = textFieldEmail.getText();
 
         String password = RandomPassword.generate();
 
@@ -87,7 +88,7 @@ public class SecretaryStudentController {
             return;
         }
 
-        String accountCreationText = FileUtils.getRessourceFileContent("mail", "passwordAccountCreation.txt");
+        String accountCreationText = FileUtils.getResourceFileContent("mail", "passwordAccountCreation.txt");
         accountCreationText = fillInfosEmail(accountCreationText, password);
         try {
             MailSender.send("Bienvenue sur votre espace HyperPlanning",
@@ -105,8 +106,9 @@ public class SecretaryStudentController {
         Popup.popup("Succès", "Ajout de l'étudiant avec succès !");
     }
 
+    @FXML
     public void onBack(ActionEvent actionEvent) {
-        SceneSwitcher.switchToScene(actionEvent, "SecretaryManagement.fxml");
+        SceneSwitcher.switchToScene(actionEvent, Views.SECRETARY_MANAGEMENT);
     }
 
     private String fillInfosEmail(String emailText, String password) {
@@ -117,7 +119,5 @@ public class SecretaryStudentController {
                 .replace("{user.password}", password)
                 .replace("{support.email}", System.getProperty("support.email"));
     }
-
-
 
 }

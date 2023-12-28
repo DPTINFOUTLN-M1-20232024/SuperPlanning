@@ -1,4 +1,4 @@
-package fr.wedidit.superplanning.superplanning.controllers.exceptions;
+package fr.wedidit.superplanning.superplanning.controllers.validators;
 
 public class ControllerValidatorException extends Exception {
 

@@ -17,6 +17,7 @@ import fr.wedidit.superplanning.superplanning.identifiables.completes.others.Ses
 import fr.wedidit.superplanning.superplanning.utils.others.TimeUtils;
 import fr.wedidit.superplanning.superplanning.utils.views.AutoCompleteBox;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
+import fr.wedidit.superplanning.superplanning.utils.views.Views;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -149,7 +150,8 @@ public class SecretarySessionController {
         return Timestamp.valueOf(datePicker.getValue().atTime(time[0], time[1]));
     }
 
+    @FXML
     public void onBack(ActionEvent actionEvent) {
-        SceneSwitcher.switchToScene(actionEvent, "SecretaryManagement.fxml");
+        SceneSwitcher.switchToScene(actionEvent, Views.SECRETARY_MANAGEMENT);
     }
 }

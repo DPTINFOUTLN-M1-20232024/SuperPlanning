@@ -11,6 +11,11 @@ public class TimeUtils {
 
     private TimeUtils() {}
 
+    /**
+     * @param text with the format HH:mm or HHhmm
+     * @return an array [hours, minutes]
+     * @throws NumberFormatException if the format of the text is not correct
+     */
     public static int[] parseHoursMinutes(String text) throws NumberFormatException {
         if (text.length() != 5) throw new NumberFormatException();
 

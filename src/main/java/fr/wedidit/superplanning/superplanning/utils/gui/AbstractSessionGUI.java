@@ -3,7 +3,10 @@ package fr.wedidit.superplanning.superplanning.utils.gui;
 import fr.wedidit.superplanning.superplanning.identifiables.completes.others.Session;
 import fr.wedidit.superplanning.superplanning.utils.maths.Point;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -34,9 +37,11 @@ public class AbstractSessionGUI {
     private final Point drawingRectangleSize;
 
     // FXML
+    @FXML
     private AnchorPane edtFrame;
+    @FXML
     private Label labelInfo;
-    @Getter
+    @FXML
     private Rectangle sessionRectangle;
     private final String sessionInfos;
 
@@ -72,8 +77,9 @@ public class AbstractSessionGUI {
         );
         this.labelInfo = new Label(sessionInfos);
         this.sessionRectangle = new Rectangle();
-        this.sessionRectangle.setOnMouseClicked(t -> Popup.popup("Informations du cours", sessionInfos));
-        this.labelInfo.setOnMouseClicked(t -> Popup.popup("Informations du cours", sessionInfos));
+        EventHandler<MouseEvent> eventHandler = mouseEvent -> Popup.popup("Informations du cours", sessionInfos);
+        this.sessionRectangle.setOnMouseClicked(eventHandler);
+        this.labelInfo.setOnMouseClicked(eventHandler);
     }
 
     protected void draw() {

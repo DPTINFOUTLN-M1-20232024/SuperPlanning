@@ -9,6 +9,7 @@ import fr.wedidit.superplanning.superplanning.utils.gui.AbstractSessionGUI;
 import fr.wedidit.superplanning.superplanning.utils.gui.SessionWeekGUI;
 import fr.wedidit.superplanning.superplanning.utils.others.TimeUtils;
 import fr.wedidit.superplanning.superplanning.utils.views.Popup;
+import fr.wedidit.superplanning.superplanning.utils.views.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -107,7 +108,7 @@ public class WeekViewController {
     /* Methods */
     @FXML
     private void switchToDailyView(ActionEvent event) {
-        SceneSwitcher.switchToScene(event, "DailyView.fxml");
+        SceneSwitcher.switchToScene(event, Views.DAILY_VIEW);
     }
 
 

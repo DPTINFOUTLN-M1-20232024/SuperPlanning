@@ -14,7 +14,7 @@ public class SceneLoader {
 
     public static <T> T loadScene(String fxmlFileName) {
         try {
-            return FXMLLoader.load(Objects.requireNonNull(FileUtils.getRessourceFile("fxml", fxmlFileName)));
+            return FXMLLoader.load(Objects.requireNonNull(FileUtils.getResourceFile("fxml", fxmlFileName)));
         } catch (IOException e) {
             log.error("Unable to load the FXML file \"%s\".".formatted(fxmlFileName));
             log.error(e.getLocalizedMessage());

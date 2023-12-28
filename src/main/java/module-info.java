@@ -12,6 +12,8 @@ module fr.wedidit.superplanning.superplanning {
 
     opens fr.wedidit.superplanning.superplanning to javafx.fxml;
     exports fr.wedidit.superplanning.superplanning;
+    opens fr.wedidit.superplanning.superplanning.utils.views to javafx.fxml;
+    exports fr.wedidit.superplanning.superplanning.utils.views;
     exports fr.wedidit.superplanning.superplanning.controllers.secretary;
     opens fr.wedidit.superplanning.superplanning.controllers.secretary to javafx.fxml;
     exports fr.wedidit.superplanning.superplanning.utils.controllers;

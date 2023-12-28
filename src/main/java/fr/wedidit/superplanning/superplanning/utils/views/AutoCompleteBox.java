@@ -122,6 +122,13 @@ public class AutoCompleteBox implements EventHandler<KeyEvent> {
         setItems();
     }
 
+    /**
+     * Parse the content of comboBox to get the id of the
+     * identifiable object
+     *
+     * @param comboBox with the list of identifiable
+     * @return the id of the selected item in the comboBox
+     */
     public static long getIdFromSearchBar(ComboBox<String> comboBox) {
         String rightPart = comboBox.getValue().split("id=")[1];
         StringBuilder idString = new StringBuilder();
