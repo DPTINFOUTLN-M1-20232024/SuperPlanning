@@ -1,12 +1,16 @@
 package fr.wedidit.superplanning.superplanning.utils.others;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
+import java.util.Calendar;
 import java.util.Locale;
 
+@Slf4j
 public class TimeUtils {
 
     private TimeUtils() {}
@@ -68,8 +72,8 @@ public class TimeUtils {
 
     public static LocalDateTime currentPageIndexToLocalDateTime(int currentPageIndex) {
 
-        int year = Year.now().getValue();
-        int weekNumber = currentPageIndex + 34;
+        int year = Year.now().getValue() - 1;
+        int weekNumber = currentPageIndex + 33;
         if (weekNumber >= 53) {
             weekNumber -= 52;
             year++;

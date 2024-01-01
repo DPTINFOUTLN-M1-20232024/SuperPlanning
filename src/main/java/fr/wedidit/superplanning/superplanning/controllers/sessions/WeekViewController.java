@@ -66,8 +66,12 @@ public class WeekViewController {
         });
 
         int weekNumber = TimeUtils.getPaginationIndexFromCurrentDate();
+        int indexPagination = weekNumber - 33;
+        if (indexPagination < 0) {
+            indexPagination += 53;
+        }
         weekPagination.setPageCount(52);
-        weekPagination.setCurrentPageIndex((weekNumber - 33) % 53);
+        weekPagination.setCurrentPageIndex(indexPagination);
 
         initStudentInfos();
 
