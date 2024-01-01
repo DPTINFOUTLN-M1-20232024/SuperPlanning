@@ -1,5 +1,7 @@
 package fr.wedidit.superplanning.superplanning.utils.views;
 
+import fr.wedidit.superplanning.superplanning.database.dao.DAO;
+import fr.wedidit.superplanning.superplanning.database.exceptions.DataAccessException;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
@@ -8,27 +10,43 @@ import javafx.collections.FXCollections;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 /**
  * From <a href="https://www.techgalery.com/2019/08/javafx-combo-box-with-search.html">this website</a>
  */
-public class AutoCompleteBox<T> implements EventHandler<KeyEvent> {
-    private final ComboBox<T> comboBox;
-    private final ObservableList<T> data;
+@Slf4j
+public class AutoCompleteBox implements EventHandler<KeyEvent> {
+    private final ComboBox<String> comboBox;
+    private final ObservableList<String> data;
     private Integer sid;
 
-    public AutoCompleteBox(final ComboBox<T> comboBox) {
+    /**
+     *
+     * @param comboBox filled
+     */
+    public AutoCompleteBox(final ComboBox<String> comboBox) {
         this.comboBox = comboBox;
         this.data = comboBox.getItems();
 
         this.doAutoCompleteBox();
     }
 
-    public AutoCompleteBox(final ComboBox<T> comboBox, Integer sid) {
+    public AutoCompleteBox(final ComboBox<String> comboBox, Integer sid) {
         this.comboBox = comboBox;
         this.data = comboBox.getItems();
         this.sid = sid;
 
+        this.doAutoCompleteBox();
+    }
+
+    public AutoCompleteBox(final ComboBox<String> comboBox, DAO<?> dao) throws DataAccessException {
+        List<String> items = dao.findAll().resultList().stream().map(Object::toString).toList();
+        comboBox.setItems(FXCollections.observableList(items));
+        this.comboBox = comboBox;
+        this.data = comboBox.getItems();
         this.doAutoCompleteBox();
     }
 
@@ -41,17 +59,12 @@ public class AutoCompleteBox<T> implements EventHandler<KeyEvent> {
         });
 
         this.comboBox.getEditor().setOnMouseClicked(event ->{
-            if(event.getButton().equals(MouseButton.PRIMARY)){
-                if(event.getClickCount() == 2){
-                    return;
-                }
-            }
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) return;
             this.comboBox.show();
         });
 
-        this.comboBox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            moveCaret(this.comboBox.getEditor().getText().length());
-        });
+        this.comboBox.getSelectionModel().selectedIndexProperty().addListener(
+                (observable, oldValue, newValue) -> moveCaret(this.comboBox.getEditor().getText().length()));
 
         this.comboBox.setOnKeyPressed(t -> comboBox.hide());
 
@@ -62,12 +75,12 @@ public class AutoCompleteBox<T> implements EventHandler<KeyEvent> {
     }
 
     private void setItems() {
-        ObservableList list = FXCollections.observableArrayList();
+        ObservableList<String> list = FXCollections.observableArrayList();
 
-        for (Object datum : this.data) {
+        for (String datum : this.data) {
             String s = this.comboBox.getEditor().getText().toLowerCase();
-            if (datum.toString().toLowerCase().contains(s.toLowerCase())) {
-                list.add(datum.toString());
+            if (datum.toLowerCase().contains(s.toLowerCase())) {
+                list.add(datum);
             }
         }
 
@@ -93,7 +106,7 @@ public class AutoCompleteBox<T> implements EventHandler<KeyEvent> {
 
         if(keyEvent.getCode() == KeyCode.BACK_SPACE){
             String str = this.comboBox.getEditor().getText();
-            if (str != null && str.length() > 0) {
+            if (str != null && !str.isEmpty()) {
                 str = str.substring(0, str.length() - 1);
             }
             if(str != null){
@@ -107,5 +120,27 @@ public class AutoCompleteBox<T> implements EventHandler<KeyEvent> {
             return;
 
         setItems();
+    }
+
+    /**
+     * Parse the content of comboBox to get the id of the
+     * identifiable object
+     *
+     * @param comboBox with the list of identifiable
+     * @return the id of the selected item in the comboBox
+     */
+    public static long getIdFromSearchBar(ComboBox<String> comboBox) {
+        String rightPart = comboBox.getValue().split("id=")[1];
+        StringBuilder idString = new StringBuilder();
+        for (int i = 0; i < rightPart.length() && Character.isDigit(rightPart.charAt(i)); i++) {
+            idString.append(rightPart.charAt(i));
+        }
+
+        try {
+            return Long.parseLong(idString.toString());
+        } catch (NumberFormatException numberFormatException) {
+            Popup.error("Unable to get the id field in text \"%s\"".formatted(comboBox.getValue()));
+            return -1;
+        }
     }
 }

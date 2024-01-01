@@ -1,6 +1,6 @@
 package fr.wedidit.superplanning.superplanning.utils.gui;
 
-import fr.wedidit.superplanning.superplanning.identifiables.others.Session;
+import fr.wedidit.superplanning.superplanning.identifiables.completes.others.Session;
 import javafx.scene.layout.AnchorPane;
 
 public class SessionDailyGUI extends AbstractSessionGUI{

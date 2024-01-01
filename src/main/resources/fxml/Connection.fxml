@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #23272a;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.wedidit.superplanning.superplanning.controllers.connections.ConnectionController">
+    <BorderPane>
+        <top>
+            <HBox alignment="CENTER" spacing="5.0" />
+        </top>
+    </BorderPane>
+    <ImageView fitHeight="362.0" fitWidth="283.0" layoutY="31.0" preserveRatio="true">
+        <image>
+            <Image url="@../image/SUPERmodifier.png" />
+        </image>
+    </ImageView>
+    <Label layoutX="317.0" layoutY="51.0" text="CONNEXION" textFill="WHITE">
+        <font>
+            <Font size="32.0" />
+        </font>
+    </Label>
+    <Label layoutX="296.0" layoutY="114.0" text="Mail" textFill="WHITE">
+        <font>
+            <Font size="25.0" />
+        </font>
+    </Label>
+    <TextField fx:id="textFieldMail" layoutX="300.0" layoutY="150.0" />
+   <PasswordField fx:id="textFieldPassword" layoutX="300.0" layoutY="224.0" onAction="#onEnter" />
+    <Label layoutX="296.0" layoutY="194.0" text="Mot de passe" textFill="WHITE">
+        <font>
+            <Font size="25.0" />
+        </font>
+    </Label>
+    <Button layoutX="310.0" layoutY="335.0" mnemonicParsing="false" onAction="#onButtonConnectClick" text="Se connecter">
+        <font>
+            <Font size="21.0" />
+        </font>
+    </Button>
+    <Button layoutX="445.0" layoutY="277.0" mnemonicParsing="false" onAction="#onButtonPasswordForget" text="Mot de passe oublié" underline="true" />
+
+</AnchorPane>

@@ -1,6 +1,8 @@
 package fr.wedidit.superplanning.superplanning.properties;
 
-import java.io.FileNotFoundException;
+import fr.wedidit.superplanning.superplanning.utils.others.FileUtils;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -10,7 +12,10 @@ import java.util.Properties;
  * interacting with the Property
  * object.
  */
+@Slf4j
 public class PropertyLoader {
+
+    private static final String PROPERTY_FILE_NAME = "app.properties";
 
     private PropertyLoader() {}
 
@@ -18,19 +23,21 @@ public class PropertyLoader {
      * Load the database login/password
      * contained in the app.properties
      * file into the System properties.
-     *
-     * @param propertyFileName File name
-     * @throws IOException If the file is not found
      */
-    public static void loadPropertyFile(String propertyFileName) throws IOException {
+    public static void loadPropertyFile() {
         Properties properties = new Properties();
 
         // Get the file
-        InputStream inputstream = PropertyLoader.class.getClassLoader().getResourceAsStream(propertyFileName);
-        if (inputstream == null) throw new FileNotFoundException();
+        InputStream inputstream = FileUtils.getResourceFileAsStream(PROPERTY_FILE_NAME);
 
         // load the property object from the file
-        properties.load(inputstream);
+        try {
+            properties.load(inputstream);
+        } catch (IOException e) {
+            log.error("Unable to setup properties file");
+            log.error(e.getLocalizedMessage());
+            return;
+        }
 
         // Apply the new property objet to the system
         System.setProperties(properties);

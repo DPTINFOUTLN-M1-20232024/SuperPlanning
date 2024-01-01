@@ -1,40 +1,34 @@
 package fr.wedidit.superplanning.superplanning;
 
 import fr.wedidit.superplanning.superplanning.properties.PropertyLoader;
+import fr.wedidit.superplanning.superplanning.utils.controllers.SceneLoader;
+import fr.wedidit.superplanning.superplanning.utils.controllers.SceneSwitcher;
+import fr.wedidit.superplanning.superplanning.utils.others.FileUtils;
+import fr.wedidit.superplanning.superplanning.utils.views.Views;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
-import java.util.Objects;
 
 @Slf4j
 public class MainApplication extends Application {
 
-    public static void loadProperties() {
-        try {
-            PropertyLoader.loadPropertyFile("app.properties");
-        } catch (IOException e) {
-            log.error(e.getLocalizedMessage());
-        }
-    }
-
     @Override
     public void start(Stage stage) {
-        Parent root;
-        try {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("Connection.fxml")));
-        } catch (IOException ioException) {
-            log.error(ioException.getLocalizedMessage());
-            return;
-        }
-        stage.setScene(new Scene(root));
-        loadProperties();
+        Parent root = SceneLoader.loadScene(Views.CONNECTION.getFileName());
+        if (root == null) return;
+
+        Scene scene = new Scene(root);
+
+        PropertyLoader.loadPropertyFile();
+        stage.setScene(scene);
         stage.setResizable(false);
+        stage.setTitle("Super Planning");
+        stage.getIcons().add(new Image(FileUtils.getResourceFileAsStream("image", "Superplanning.png")));
+        SceneSwitcher.setupWindowDimensions(stage, Views.CONNECTION);
+        SceneSwitcher.centerWindow(stage);
         stage.show();
     }
 
