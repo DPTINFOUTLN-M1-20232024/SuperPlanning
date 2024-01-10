@@ -9,11 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <name>SuperPlanning</name>
 
-    <packaging>jar</packaging>
-    <build>
-        <finalName>WhatEverYouLikey</finalName>
-    </build>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.8.2</junit.version>
