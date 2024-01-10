@@ -1,5 +1,6 @@
 package fr.wedidit.superplanning.superplanning;
 
+import fr.wedidit.superplanning.superplanning.database.H2Server;
 import fr.wedidit.superplanning.superplanning.properties.PropertyLoader;
 import fr.wedidit.superplanning.superplanning.utils.controllers.SceneLoader;
 import fr.wedidit.superplanning.superplanning.utils.controllers.SceneSwitcher;
@@ -25,14 +26,19 @@ public class MainApplication extends Application {
         PropertyLoader.loadPropertyFile();
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("Super Planning");
+        stage.setTitle("SuperPlanning");
         stage.getIcons().add(new Image(FileUtils.getResourceFileAsStream("image", "Superplanning.png")));
         SceneSwitcher.setupWindowDimensions(stage, Views.CONNECTION);
         SceneSwitcher.centerWindow(stage);
         stage.show();
     }
+    @Override
+    public void stop() {
+        H2Server.close();
+    }
 
     public static void main(String[] args) {
+        H2Server.open();
         launch(args);
     }
 }
